@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Основы JavaScript - Синтаксис</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #4a5568;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        
+        h2 {
+            color: #2d3748;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+            margin-top: 30px;
+        }
+        
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            position: relative;
+        }
+        
+        .code-block button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .code-block button:hover {
+            background: #5a67d8;
+        }
+        
+        .output {
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            min-height: 20px;
+        }
+        
+        .example {
+            background: #edf2f7;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .practice-section {
+            background: #f0fff4;
+            border: 2px solid #68d391;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .practice-section h3 {
+            color: #22543d;
+            margin-top: 0;
+        }
+        
+        input, button {
+            padding: 10px;
+            margin: 5px;
+            border: 2px solid #e2e8f0;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        button {
+            background: #667eea;
+            color: white;
+            cursor: pointer;
+            border: none;
+        }
+        
+        button:hover {
+            background: #5a67d8;
+        }
+        
+        .tip {
+            background: #fff5f5;
+            border: 2px solid #feb2b2;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .tip h4 {
+            color: #c53030;
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Основы JavaScript - Синтаксис</h1>
+        
+        <h2>1. Переменные</h2>
+        <p>Переменные - это контейнеры для хранения данных. В JavaScript есть три способа объявления переменных:</p>
+        
+        <div class="code-block">
+            <button onclick="runCode(this)">Запустить</button>
+            <pre>// Объявление переменных
+let name = "Иван";           // можно изменять
+const age = 25;              // нельзя изменять
+var oldWay = "старый способ"; // устаревший способ
+
+console.log("Имя:", name);
+console.log("Возраст:", age);
+console.log("Старый способ:", oldWay);</pre>
+        </div>
+        
+        <div class="output" id="output1"></div>
+        
+        <div class="example">
+            <h4>💡 Объяснение:</h4>
+            <ul>
+                <li><strong>let</strong> - переменная, которую можно изменять</li>
+                <li><strong>const</strong> - константа, которую нельзя изменять</li>
+                <li><strong>var</strong> - старый способ (лучше не использовать)</li>
+            </ul>
+        </div>
+        
+        <h2>2. Типы данных</h2>
+        <p>JavaScript имеет несколько основных типов данных:</p>
+        
+        <div class="code-block">
+            <button onclick="runCode(this)">Запустить</button>
+            <pre>// Строки (текст)
+let firstName = "Анна";
+let lastName = 'Петрова';
+let fullName = `${firstName} ${lastName}`; // шаблонные строки
+
+// Числа
+let integer = 42;
+let decimal = 3.14;
+let negative = -10;
+
+// Булевы значения (true/false)
+let isStudent = true;
+let isWorking = false;
+
+// Undefined и null
+let notDefined;
+let emptyValue = null;
+
+console.log("Строки:", firstName, lastName, fullName);
+console.log("Числа:", integer, decimal, negative);
+console.log("Булевы:", isStudent, isWorking);
+console.log("Особые:", notDefined, emptyValue);</pre>
+        </div>
+        
+        <div class="output" id="output2"></div>
+        
+        <h2>3. Операторы</h2>
+        <p>Операторы позволяют выполнять различные операции с данными:</p>
+        
+        <div class="code-block">
+            <button onclick="runCode(this)">Запустить</button>
+            <pre>// Математические операторы
+let a = 10;
+let b = 3;
+
+console.log("Сложение:", a + b);        // 13
+console.log("Вычитание:", a - b);       // 7
+console.log("Умножение:", a * b);       // 30
+console.log("Деление:", a / b);         // 3.333...
+console.log("Остаток от деления:", a % b); // 1
+console.log("Возведение в степень:", a ** b); // 1000
+
+// Операторы сравнения
+console.log("a > b:", a > b);           // true
+console.log("a < b:", a < b);           // false
+console.log("a == b:", a == b);         // false
+console.log("a === b:", a === b);       // false (строгое сравнение)
+console.log("a != b:", a != b);         // true
+console.log("a !== b:", a !== b);       // true
+
+// Логические операторы
+let x = true;
+let y = false;
+
+console.log("И (&&):", x && y);         // false
+console.log("ИЛИ (||):", x || y);       // true
+console.log("НЕ (!):", !x);             // false</pre>
+        </div>
+        
+        <div class="output" id="output3"></div>
+        
+        <h2>4. Условные конструкции</h2>
+        <p>Условные конструкции позволяют выполнять разный код в зависимости от условий:</p>
+        
+        <div class="code-block">
+            <button onclick="runCode(this)">Запустить</button>
+            <pre>let score = 85;
+
+// Простое условие if-else
+if (score >= 90) {
+    console.log("Отлично! Оценка A");
+} else if (score >= 80) {
+    console.log("Хорошо! Оценка B");
+} else if (score >= 70) {
+    console.log("Удовлетворительно! Оценка C");
+} else {
+    console.log("Неудовлетворительно! Оценка F");
+}
+
+// Тернарный оператор
+let result = score >= 60 ? "Сдал" : "Не сдал";
+console.log("Результат:", result);
+
+// Switch для множественных условий
+let day = "понедельник";
+switch (day) {
+    case "понедельник":
+        console.log("Начинается рабочая неделя");
+        break;
+    case "пятница":
+        console.log("Ура! Пятница!");
+        break;
+    case "суббота":
+    case "воскресенье":
+        console.log("Выходные!");
+        break;
+    default:
+        console.log("Обычный рабочий день");
+}</pre>
+        </div>
+        
+        <div class="output" id="output4"></div>
+        
+        <h2>5. Функции</h2>
+        <p>Функции - это блоки кода, которые можно переиспользовать:</p>
+        
+        <div class="code-block">
+            <button onclick="runCode(this)">Запустить</button>
+            <pre>// Объявление функции
+function greet(name) {
+    return `Привет, ${name}!`;
+}
+
+// Вызов функции
+console.log(greet("Мария"));
+
+// Функция с несколькими параметрами
+function add(a, b) {
+    return a + b;
+}
+
+console.log("Сумма 5 + 3 =", add(5, 3));
+
+// Стрелочная функция (современный синтаксис)
+const multiply = (x, y) => x * y;
+console.log("Произведение 4 * 6 =", multiply(4, 6));
+
+// Функция без параметров
+const getRandomNumber = () => Math.floor(Math.random() * 100);
+console.log("Случайное число:", getRandomNumber());</pre>
+        </div>
+        
+        <div class="output" id="output5"></div>
+        
+        <div class="practice-section">
+            <h3>🎯 Практическое задание</h3>
+            <p>Попробуй создать простую функцию, которая принимает имя и возраст, и возвращает приветствие:</p>
+            
+            <input type="text" id="practiceName" placeholder="Введите имя" value="Алексей">
+            <input type="number" id="practiceAge" placeholder="Введите возраст" value="25">
+            <button onclick="practiceFunction()">Проверить функцию</button>
+            
+            <div class="output" id="practiceOutput"></div>
+        </div>
+        
+        <div class="tip">
+            <h4>💡 Важные советы:</h4>
+            <ul>
+                <li>Всегда используй <code>let</code> или <code>const</code> вместо <code>var</code></li>
+                <li>Используй <code>===</code> для сравнения вместо <code>==</code></li>
+                <li>Пиши понятные имена переменных и функций</li>
+                <li>Не забывай про точки с запятой в конце строк</li>
+                <li>Комментируй свой код</li>
+            </ul>
+        </div>
+        
+        <h2>6. Следующие шаги</h2>
+        <p>Теперь, когда ты изучил основы синтаксиса, можешь переходить к:</p>
+        <ul>
+            <li>Массивам и их методам</li>
+            <li>Объектам</li>
+            <li>Циклам</li>
+            <li>Работе с DOM</li>
+        </ul>
+    </div>
+
+    <script>
+        // Функция для запуска примеров кода
+        function runCode(button) {
+            const codeBlock = button.parentElement;
+            const code = codeBlock.querySelector('pre').textContent;
+            const outputId = getOutputId(codeBlock);
+            const output = document.getElementById(outputId);
+            
+            // Очищаем предыдущий вывод
+            output.innerHTML = '';
+            
+            try {
+                // Создаем временную функцию для выполнения кода
+                const tempFunction = new Function(code);
+                tempFunction();
+                
+                // Перехватываем console.log и выводим в наш блок
+                const originalLog = console.log;
+                const logs = [];
+                
+                console.log = function(...args) {
+                    logs.push(args.join(' '));
+                    originalLog.apply(console, args);
+                };
+                
+                // Выполняем код
+                eval(code);
+                
+                // Восстанавливаем console.log
+                console.log = originalLog;
+                
+                // Выводим результат
+                logs.forEach(log => {
+                    output.innerHTML += `<div>${log}</div>`;
+                });
+                
+            } catch (error) {
+                output.innerHTML = `<div style="color: red;">Ошибка: ${error.message}</div>`;
+            }
+        }
+        
+        // Получаем ID блока вывода
+        function getOutputId(codeBlock) {
+            const outputs = document.querySelectorAll('.output');
+            for (let i = 0; i < outputs.length; i++) {
+                if (codeBlock.nextElementSibling === outputs[i]) {
+                    return outputs[i].id;
+                }
+            }
+            return 'output1';
+        }
+        
+        // Практическое задание
+        function practiceFunction() {
+            const name = document.getElementById('practiceName').value;
+            const age = document.getElementById('practiceAge').value;
+            const output = document.getElementById('practiceOutput');
+            
+            if (!name || !age) {
+                output.innerHTML = '<div style="color: red;">Пожалуйста, заполните все поля!</div>';
+                return;
+            }
+            
+            // Пример правильной функции
+            const greetPerson = (personName, personAge) => {
+                return `Привет, ${personName}! Тебе ${personAge} лет.`;
+            };
+            
+            const result = greetPerson(name, age);
+            output.innerHTML = `<div style="color: green;"><strong>Результат:</strong> ${result}</div>`;
+            output.innerHTML += `<div style="margin-top: 10px;"><strong>Код функции:</strong></div>`;
+            output.innerHTML += `<div style="background: #f0f0f0; padding: 10px; border-radius: 5px; font-family: monospace;">const greetPerson = (personName, personAge) => {<br>    return \`Привет, \${personName}! Тебе \${personAge} лет.\`;<br>};</div>`;
+        }
+        
+        // Автоматически запускаем первый пример при загрузке страницы
+        window.onload = function() {
+            const firstButton = document.querySelector('.code-block button');
+            if (firstButton) {
+                firstButton.click();
+            }
+        };
+    </script>
+</body>
+</html>
