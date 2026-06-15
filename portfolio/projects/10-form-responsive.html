@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FormCraft — Адаптивные формы</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="shared.css" />
+  <style>
+    :root {
+      --bg: #f0fdf4; --surface: #fff; --text: #14532d; --muted: #4d7c5e;
+      --accent: #16a34a; --accent2: #22c55e; --border: #bbf7d0; --error: #dc2626;
+    }
+    body { font-family: 'Montserrat', sans-serif; background: var(--bg); color: var(--text); }
+    .nav { display: flex; justify-content: space-between; align-items: center; padding: 18px 32px; background: var(--surface); border-bottom: 1px solid var(--border); }
+    .nav.scrolled { box-shadow: 0 4px 20px rgba(22,163,74,.08); }
+    .burger span { background: var(--text); }
+    .logo { font-weight: 800; font-size: 22px; color: var(--accent); }
+    .nav-links { display: flex; gap: 24px; }
+    .nav-links a { font-size: 14px; font-weight: 600; color: var(--muted); }
+    .btn-primary { background: var(--accent); color: #fff; box-shadow: 0 8px 24px rgba(22,163,74,.3); }
+    .mobile-menu-panel { background: #fff; }
+    .mobile-menu-panel a { color: var(--text); }
+
+    .layout {
+      max-width: 1000px; margin: 0 auto; padding: 48px 32px 80px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start;
+    }
+    .info h1 { font-size: clamp(26px, 3.5vw, 36px); font-weight: 800; margin-bottom: 16px; line-height: 1.15; }
+    .info p { font-size: 15px; color: var(--muted); line-height: 1.75; margin-bottom: 24px; }
+    .check-list { list-style: none; }
+    .check-list li {
+      padding: 10px 0; font-size: 14px; font-weight: 600;
+      display: flex; align-items: center; gap: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .check-list li::before { content: '✓'; color: var(--accent); font-weight: 800; }
+
+    .form-card {
+      background: var(--surface); border-radius: 24px; padding: 36px;
+      box-shadow: 0 20px 50px rgba(22,163,74,.1); border: 1px solid var(--border);
+    }
+    .form-card h2 { font-size: 20px; font-weight: 800; margin-bottom: 6px; }
+    .form-card .sub { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .field { margin-bottom: 16px; }
+    .field label { display: block; font-size: 12px; font-weight: 700; margin-bottom: 6px; color: var(--muted); }
+    .field input, .field select, .field textarea {
+      width: 100%; padding: 14px 16px; border: 2px solid var(--border);
+      border-radius: 12px; font-family: inherit; font-size: 14px;
+      transition: border-color .2s, box-shadow .2s; outline: none; background: #fafafa;
+    }
+    .field input:focus, .field select:focus, .field textarea:focus {
+      border-color: var(--accent); box-shadow: 0 0 0 4px rgba(22,163,74,.12);
+    }
+    .field input.invalid { border-color: var(--error); }
+    .field .hint { font-size: 11px; color: var(--error); margin-top: 4px; display: none; }
+    .field input.invalid + .hint { display: block; }
+    .field textarea { min-height: 90px; resize: vertical; }
+    .form-submit {
+      width: 100%; padding: 16px; border: none; border-radius: 14px;
+      background: var(--accent); color: #fff; font-family: inherit;
+      font-size: 15px; font-weight: 700; cursor: pointer;
+      transition: transform .25s, box-shadow .25s;
+    }
+    .form-submit:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(22,163,74,.35); }
+    .form-success {
+      display: none; text-align: center; padding: 32px 16px;
+      animation: popIn .5s var(--ease);
+    }
+    .form-success.show { display: block; }
+    .form-success .icon { font-size: 48px; margin-bottom: 12px; }
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(.92); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .footer-bottom { text-align: center; padding: 24px; font-size: 13px; color: var(--muted); border-top: 1px solid var(--border); }
+
+    @media (max-width: 800px) {
+      .layout { grid-template-columns: 1fr; gap: 32px; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 520px) {
+      .layout { padding: 32px 20px 60px; }
+      .form-card { padding: 24px; }
+      .nav { padding: 16px 20px; }
+    }
+
+    .back-home {
+      padding: 11px 18px; border-radius: 100px;
+      background: var(--surface); border: 2px solid var(--accent);
+      color: var(--accent); font-weight: 700; font-size: 13px;
+    }
+    .back-to-top { background: var(--accent); color: #fff; box-shadow: 0 6px 24px rgba(22,163,74,.4); }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="logo">FormCraft</div>
+    <ul class="nav-links"><li><a href="#form">Форма</a></li></ul>
+    <button class="burger" aria-label="Меню"><span></span><span></span><span></span></button>
+  </nav>
+  <div class="mobile-menu"><div class="mobile-menu-panel"><a href="#form">Форма</a></div></div>
+
+  <div class="layout">
+    <div class="info reveal-left">
+      <h1>Адаптивная форма заказа</h1>
+      <p>Два поля в ряд на desktop, в столбик на mobile. Валидация, фокус-состояния, доступные label и корректные отступы на touch-экранах.</p>
+      <ul class="check-list">
+        <li>Поля 44px+ для пальца</li>
+        <li>Grid 2→1 колонка</li>
+        <li>Валидация email в реальном времени</li>
+        <li>Сообщение об успешной отправке</li>
+      </ul>
+    </div>
+
+    <div class="form-card reveal-right" id="form">
+      <div id="formWrap">
+        <h2>Оставить заявку</h2>
+        <p class="sub">Ответим в течение 2 часов</p>
+        <form id="orderForm">
+          <div class="form-row">
+            <div class="field"><label>Имя</label><input type="text" placeholder="Алексей" required /></div>
+            <div class="field"><label>Телефон</label><input type="tel" placeholder="+7 (999) 000-00-00" required /></div>
+          </div>
+          <div class="field">
+            <label>Email</label>
+            <input type="email" id="emailInput" placeholder="mail@example.com" />
+            <span class="hint">Введите корректный email</span>
+          </div>
+          <div class="field"><label>Услуга</label>
+            <select><option>Доработка вёрстки</option><option>Адаптив под мобильные</option><option>Исправление багов CSS</option></select>
+          </div>
+          <div class="field"><label>Комментарий</label><textarea placeholder="Опишите задачу..."></textarea></div>
+          <button type="submit" class="form-submit">Отправить заявку</button>
+        </form>
+      </div>
+      <div class="form-success" id="formSuccess">
+        <div class="icon">✅</div>
+        <h3>Заявка отправлена!</h3>
+        <p style="color:var(--muted);font-size:14px;margin-top:8px;">Демо-форма — данные никуда не уходят</p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer-bottom">Учебный проект · Адаптивные формы · HTML/CSS/JS · 2026</footer>
+
+  <a href="../index.html" class="back-home" aria-label="Вернуться в портфолио">
+    <span class="back-home-icon" aria-hidden="true">📝</span>
+    <span class="back-home-label">На главную</span>
+  </a>
+
+  <script src="shared.js"></script>
+  <script>
+    const email = document.getElementById('emailInput');
+    email?.addEventListener('input', () => {
+      const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value);
+      email.classList.toggle('invalid', email.value.length > 0 && !ok);
+    });
+    document.getElementById('orderForm')?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (email.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+        email.classList.add('invalid');
+        return;
+      }
+      document.getElementById('formWrap').style.display = 'none';
+      document.getElementById('formSuccess').classList.add('show');
+    });
+  </script>
+</body>
+</html>

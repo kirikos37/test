@@ -22,6 +22,11 @@ const projects = [
   { file: '02-coffee-shop.html', gif: '02-coffee-shop.gif' },
   { file: '04-fitness-app.html', gif: '04-fitness-app.gif' },
   { file: '05-online-course.html', gif: '05-online-course.gif' },
+  { file: '07-responsive-adapt.html', gif: '07-responsive-adapt.gif' },
+  { file: '08-catalog-grid.html', gif: '08-catalog-grid.gif' },
+  { file: '09-mobile-nav.html', gif: '09-mobile-nav.gif' },
+  { file: '10-form-responsive.html', gif: '10-form-responsive.gif' },
+  { file: '11-table-adaptive.html', gif: '11-table-adaptive.gif' },
 ];
 
 function findBrowser() {

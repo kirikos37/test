@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NavFix — Адаптивная навигация</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="shared.css" />
+  <style>
+    :root {
+      --bg: #111827; --surface: #1f2937; --text: #f9fafb; --muted: #9ca3af;
+      --accent: #f59e0b; --accent2: #fbbf24; --border: rgba(255,255,255,.08);
+    }
+    body { font-family: 'Montserrat', sans-serif; background: var(--bg); color: var(--text); }
+    .nav { display: flex; justify-content: space-between; align-items: center; padding: 16px 32px; }
+    .nav.scrolled { background: rgba(17,24,39,.95); backdrop-filter: blur(14px); box-shadow: 0 4px 24px rgba(0,0,0,.2); }
+    .burger span { background: var(--text); }
+    .logo { font-weight: 800; font-size: 20px; }
+    .logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 28px; align-items: center; }
+    .nav-links a { font-size: 14px; font-weight: 600; color: var(--muted); transition: color .2s; }
+    .nav-links a:hover { color: var(--text); }
+    .btn-primary { background: var(--accent); color: #1a1205; font-weight: 700; }
+    .mobile-menu-panel { background: var(--surface); }
+    .mobile-menu-panel a { color: var(--text); }
+
+    .hero {
+      text-align: center; padding: 60px 32px 40px;
+      background: radial-gradient(ellipse at top, rgba(245,158,11,.12), transparent 60%);
+    }
+    h1 { font-size: clamp(28px, 4vw, 42px); font-weight: 800; margin-bottom: 16px; }
+    .hero p { color: var(--muted); font-size: 16px; max-width: 580px; margin: 0 auto 36px; line-height: 1.7; }
+
+    .devices {
+      display: flex; justify-content: center; gap: 24px; flex-wrap: wrap;
+      padding: 0 32px 80px; max-width: 1100px; margin: 0 auto;
+    }
+    .device {
+      background: var(--surface); border-radius: 24px; padding: 20px;
+      border: 1px solid var(--border); text-align: center;
+      transition: transform .4s var(--ease), box-shadow .4s;
+      flex: 1; min-width: 260px; max-width: 320px;
+    }
+    .device:hover { transform: translateY(-8px); box-shadow: 0 20px 50px rgba(0,0,0,.3); }
+    .device-label {
+      font-size: 12px; font-weight: 700; color: var(--accent2);
+      margin-bottom: 16px; letter-spacing: .06em; text-transform: uppercase;
+    }
+    .device-screen {
+      background: #fff; border-radius: 12px; overflow: hidden;
+      color: #111; text-align: left; min-height: 200px;
+    }
+    .ds-nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 10px 12px; background: #1f2937; color: #fff;
+    }
+    .ds-logo { font-size: 11px; font-weight: 800; }
+    .ds-links { display: flex; gap: 8px; font-size: 8px; font-weight: 600; color: #9ca3af; }
+    .ds-burger { display: none; flex-direction: column; gap: 3px; }
+    .ds-burger span { display: block; width: 14px; height: 2px; background: #fff; border-radius: 1px; }
+    .ds-body { padding: 14px; }
+    .ds-body h3 { font-size: 13px; font-weight: 800; margin-bottom: 6px; }
+    .ds-body p { font-size: 9px; color: #64748b; line-height: 1.5; }
+    .ds-blocks { display: flex; gap: 6px; margin-top: 10px; }
+    .ds-block { flex: 1; height: 40px; background: #f1f5f9; border-radius: 6px; }
+
+    .device.mobile .ds-links { display: none; }
+    .device.mobile .ds-burger { display: flex; }
+    .device.mobile .ds-blocks { flex-direction: column; }
+    .device.tablet .ds-links { font-size: 7px; gap: 5px; }
+    .device.tablet .ds-blocks { flex-wrap: wrap; }
+    .device.tablet .ds-block { min-width: 45%; }
+
+    .features {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+      max-width: 1100px; margin: 0 auto; padding: 0 32px 80px;
+    }
+    .feat {
+      background: var(--surface); border-radius: 16px; padding: 24px;
+      border: 1px solid var(--border); text-align: center;
+      transition: border-color .3s;
+    }
+    .feat:hover { border-color: rgba(245,158,11,.35); }
+    .feat .num {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: rgba(245,158,11,.15); color: var(--accent);
+      font-weight: 800; font-size: 14px;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 14px;
+    }
+    .feat h3 { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+    .feat p { font-size: 12px; color: var(--muted); line-height: 1.55; }
+
+    .footer-bottom { text-align: center; padding: 24px; font-size: 13px; color: var(--muted); border-top: 1px solid var(--border); }
+
+    @media (max-width: 900px) { .features { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 520px) { .features { grid-template-columns: 1fr; } .devices { padding: 0 20px 60px; } }
+
+    .back-home {
+      padding: 10px 16px; border-radius: 10px;
+      background: var(--surface); border: 1px solid rgba(245,158,11,.35);
+      color: var(--accent2); font-weight: 600; font-size: 13px;
+    }
+    .back-to-top { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #1a1205; box-shadow: 0 6px 24px rgba(245,158,11,.4); }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="logo">Nav<span>Fix</span></div>
+    <ul class="nav-links">
+      <li><a href="#devices">Демо</a></li>
+      <li><a href="#features">Этапы</a></li>
+    </ul>
+    <button class="burger" aria-label="Меню"><span></span><span></span><span></span></button>
+  </nav>
+  <div class="mobile-menu">
+    <div class="mobile-menu-panel">
+      <a href="#devices">Демо</a>
+      <a href="#features">Этапы</a>
+    </div>
+  </div>
+
+  <section class="hero reveal">
+    <h1>Адаптивная шапка и меню</h1>
+    <p>Доработка навигации под desktop, tablet и mobile: бургер-меню, липкий header, корректные отступы и брейкпоинты.</p>
+  </section>
+
+  <div class="devices reveal" id="devices">
+    <div class="device desktop">
+      <div class="device-label">Desktop 1280+</div>
+      <div class="device-screen">
+        <div class="ds-nav"><div class="ds-logo">BRAND</div><div class="ds-links"><span>Услуги</span><span>Кейсы</span><span>Цены</span><span>Контакты</span></div></div>
+        <div class="ds-body"><h3>Полное горизонтальное меню</h3><p>Все пункты видны, CTA справа</p><div class="ds-blocks"><div class="ds-block"></div><div class="ds-block"></div><div class="ds-block"></div></div></div>
+      </div>
+    </div>
+    <div class="device tablet">
+      <div class="device-label">Tablet 768px</div>
+      <div class="device-screen">
+        <div class="ds-nav"><div class="ds-logo">BRAND</div><div class="ds-links"><span>Услуги</span><span>Кейсы</span><span>Цены</span></div></div>
+        <div class="ds-body"><h3>Компактное меню</h3><p>Уменьшенные отступы, 2 колонки контента</p><div class="ds-blocks"><div class="ds-block"></div><div class="ds-block"></div></div></div>
+      </div>
+    </div>
+    <div class="device mobile">
+      <div class="device-label">Mobile 375px</div>
+      <div class="device-screen">
+        <div class="ds-nav"><div class="ds-logo">BRAND</div><div class="ds-burger"><span></span><span></span><span></span></div></div>
+        <div class="ds-body"><h3>Бургер-меню</h3><p>Навигация в выезжающей панели, контент в одну колонку</p><div class="ds-blocks"><div class="ds-block"></div><div class="ds-block"></div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="features reveal" id="features">
+    <div class="feat"><div class="num">1</div><h3>Аудит</h3><p>Нахожу проблемы на каждом брейкпоинте</p></div>
+    <div class="feat"><div class="num">2</div><h3>Медиазапросы</h3><p>Точечные @media без ломания desktop</p></div>
+    <div class="feat"><div class="num">3</div><h3>Бургер</h3><p>Мобильное меню с анимацией</p></div>
+    <div class="feat"><div class="num">4</div><h3>Тест</h3><p>Проверка на реальных устройствах</p></div>
+  </div>
+
+  <footer class="footer-bottom">Учебный проект · Адаптивная навигация · HTML/CSS · 2026</footer>
+
+  <a href="../index.html" class="back-home" aria-label="Вернуться в портфолио">
+    <span class="back-home-icon" aria-hidden="true">☰</span>
+    <span class="back-home-label">Портфолио</span>
+  </a>
+
+  <script src="shared.js"></script>
+</body>
+</html>

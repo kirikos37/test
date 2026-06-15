@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ShopGrid — Адаптивный каталог товаров</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="shared.css" />
+  <style>
+    :root {
+      --bg: #f8fafc; --surface: #fff; --text: #0f172a; --muted: #64748b;
+      --accent: #2563eb; --accent2: #3b82f6; --border: #e2e8f0;
+    }
+    body { font-family: 'Montserrat', sans-serif; background: var(--bg); color: var(--text); }
+    .nav { display: flex; justify-content: space-between; align-items: center; padding: 18px 32px; background: var(--surface); border-bottom: 1px solid var(--border); }
+    .nav.scrolled { box-shadow: 0 4px 20px rgba(0,0,0,.06); }
+    .burger span { background: var(--text); }
+    .logo { font-weight: 800; font-size: 22px; color: var(--accent); }
+    .nav-links { display: flex; gap: 24px; }
+    .nav-links a { font-size: 14px; font-weight: 600; color: var(--muted); }
+    .btn-primary { background: var(--accent); color: #fff; box-shadow: 0 8px 24px rgba(37,99,235,.25); }
+    .mobile-menu-panel { background: #fff; }
+    .mobile-menu-panel a { color: var(--text); }
+
+    .hero { padding: 48px 32px 24px; max-width: 1140px; margin: 0 auto; }
+    .hero-tag { display: inline-block; padding: 6px 12px; background: #eff6ff; color: var(--accent); border-radius: 8px; font-size: 12px; font-weight: 700; margin-bottom: 16px; }
+    h1 { font-size: clamp(28px, 4vw, 40px); font-weight: 800; margin-bottom: 12px; }
+    .hero p { color: var(--muted); font-size: 15px; max-width: 560px; line-height: 1.7; }
+
+    .toolbar {
+      max-width: 1140px; margin: 24px auto 0; padding: 0 32px;
+      display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between;
+    }
+    .view-toggle { display: flex; gap: 6px; }
+    .view-btn {
+      width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--border);
+      background: var(--surface); cursor: pointer; font-size: 16px;
+      transition: all .25s var(--ease);
+    }
+    .view-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .sort-select {
+      padding: 10px 14px; border-radius: 10px; border: 1px solid var(--border);
+      font-family: inherit; font-size: 13px; font-weight: 600; background: var(--surface);
+    }
+
+    .catalog {
+      max-width: 1140px; margin: 0 auto; padding: 24px 32px 80px;
+      display: grid; grid-template-columns: 220px 1fr; gap: 28px;
+    }
+    .sidebar {
+      background: var(--surface); border-radius: 16px; padding: 20px;
+      border: 1px solid var(--border); height: fit-content;
+      position: sticky; top: 80px;
+    }
+    .sidebar h4 { font-size: 13px; font-weight: 700; margin-bottom: 14px; }
+    .filter-item {
+      display: flex; align-items: center; gap: 8px; padding: 8px 0;
+      font-size: 13px; color: var(--muted); cursor: pointer;
+      transition: color .2s;
+    }
+    .filter-item:hover { color: var(--accent); }
+    .filter-item input { accent-color: var(--accent); }
+
+    .product-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+      transition: all .4s var(--ease);
+    }
+    .product-grid.list { grid-template-columns: 1fr; }
+    .product-card {
+      background: var(--surface); border-radius: 16px; overflow: hidden;
+      border: 1px solid var(--border);
+      transition: transform .35s var(--ease), box-shadow .35s;
+    }
+    .product-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(37,99,235,.12); }
+    .product-img {
+      height: 160px; background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+      display: flex; align-items: center; justify-content: center; font-size: 48px;
+    }
+    .product-grid.list .product-card { display: grid; grid-template-columns: 140px 1fr; }
+    .product-grid.list .product-img { height: 100%; min-height: 120px; }
+    .product-body { padding: 18px; }
+    .product-body h3 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+    .product-body p { font-size: 12px; color: var(--muted); margin-bottom: 12px; line-height: 1.5; }
+    .product-price { font-size: 18px; font-weight: 800; color: var(--accent); }
+    .product-badge {
+      display: inline-block; padding: 3px 8px; background: #fef3c7;
+      color: #b45309; border-radius: 6px; font-size: 10px; font-weight: 700; margin-bottom: 8px;
+    }
+
+    .footer-bottom { text-align: center; padding: 24px; font-size: 13px; color: var(--muted); border-top: 1px solid var(--border); }
+
+    @media (max-width: 900px) {
+      .catalog { grid-template-columns: 1fr; }
+      .sidebar { position: static; display: flex; flex-wrap: wrap; gap: 12px; }
+      .sidebar h4 { width: 100%; }
+      .filter-item { padding: 6px 12px; background: #f1f5f9; border-radius: 100px; }
+      .product-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 520px) {
+      .product-grid { grid-template-columns: 1fr; }
+      .product-grid.list .product-card { grid-template-columns: 1fr; }
+      .hero, .toolbar, .catalog { padding-left: 20px; padding-right: 20px; }
+    }
+
+    .back-home {
+      padding: 11px 18px; border-radius: 12px; background: #fff;
+      border: 1px solid var(--border); color: var(--accent); font-weight: 700; font-size: 13px;
+      box-shadow: 0 6px 20px rgba(37,99,235,.12);
+    }
+    .back-to-top { background: var(--accent); color: #fff; box-shadow: 0 6px 24px rgba(37,99,235,.4); }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="logo">ShopGrid</div>
+    <ul class="nav-links">
+      <li><a href="#catalog">Каталог</a></li>
+      <li><a href="#catalog">Фильтры</a></li>
+    </ul>
+    <button class="burger" aria-label="Меню"><span></span><span></span><span></span></button>
+  </nav>
+  <div class="mobile-menu">
+    <div class="mobile-menu-panel">
+      <a href="#catalog">Каталог</a>
+      <a href="#catalog">Фильтры</a>
+    </div>
+  </div>
+
+  <section class="hero reveal">
+    <span class="hero-tag">CSS Grid · Flexbox</span>
+    <h1>Адаптивный каталог интернет-магазина</h1>
+    <p>Сетка 3→2→1 колонки, боковые фильтры в чипы на мобильных, переключение вида «плитка / список».</p>
+  </section>
+
+  <div class="toolbar reveal">
+    <div class="view-toggle">
+      <button class="view-btn active" data-view="grid" title="Плитка">▦</button>
+      <button class="view-btn" data-view="list" title="Список">☰</button>
+    </div>
+    <select class="sort-select">
+      <option>По популярности</option>
+      <option>Сначала дешёвые</option>
+      <option>Сначала дорогие</option>
+    </select>
+  </div>
+
+  <div class="catalog" id="catalog">
+    <aside class="sidebar reveal-left">
+      <h4>Фильтры</h4>
+      <label class="filter-item"><input type="checkbox" checked /> Новинки</label>
+      <label class="filter-item"><input type="checkbox" /> Со скидкой</label>
+      <label class="filter-item"><input type="checkbox" /> В наличии</label>
+      <label class="filter-item"><input type="checkbox" /> Бесплатная доставка</label>
+    </aside>
+    <div class="product-grid reveal" id="productGrid">
+      <article class="product-card"><div class="product-img">👟</div><div class="product-body"><span class="product-badge">−20%</span><h3>Кроссовки Urban Run</h3><p>Лёгкая подошва, дышащий верх</p><div class="product-price">4 990 ₽</div></div></article>
+      <article class="product-card"><div class="product-img">🎒</div><div class="product-body"><h3>Рюкзак City Pro</h3><p>Отделение для ноутбука 15"</p><div class="product-price">2 790 ₽</div></div></article>
+      <article class="product-card"><div class="product-img">⌚</div><div class="product-body"><span class="product-badge">Хит</span><h3>Часы Classic</h3><p>Минималистичный циферблат</p><div class="product-price">6 490 ₽</div></div></article>
+      <article class="product-card"><div class="product-img">🧢</div><div class="product-body"><h3>Кепка Street</h3><p>Хлопок, регулируемый размер</p><div class="product-price">990 ₽</div></div></article>
+      <article class="product-card"><div class="product-img">👜</div><div class="product-body"><h3>Сумка Tote</h3><p>Эко-кожа, внутренний карман</p><div class="product-price">3 290 ₽</div></div></article>
+      <article class="product-card"><div class="product-img">🕶️</div><div class="product-body"><h3>Очки Aero</h3><p>UV400, поляризация</p><div class="product-price">1 890 ₽</div></div></article>
+    </div>
+  </div>
+
+  <footer class="footer-bottom">Учебный проект · Адаптация каталога · HTML/CSS · 2026</footer>
+
+  <a href="../index.html" class="back-home" aria-label="Вернуться в портфолио">
+    <span class="back-home-icon" aria-hidden="true">←</span>
+    <span class="back-home-label">К портфолио</span>
+  </a>
+
+  <script src="shared.js"></script>
+  <script>
+    const grid = document.getElementById('productGrid');
+    document.querySelectorAll('.view-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.view-btn').forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+        grid.classList.toggle('list', btn.dataset.view === 'list');
+      });
+    });
+  </script>
+</body>
+</html>

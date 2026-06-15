@@ -621,7 +621,7 @@
     }
     .services-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 20px;
     }
     .service-card {
@@ -762,7 +762,7 @@
       .stats { grid-template-columns: repeat(2, 1fr); }
       .project-grid { grid-template-columns: 1fr; }
       .project-card.featured { grid-column: span 1; grid-template-columns: 1fr; }
-      .services-grid { grid-template-columns: 1fr; }
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
       .nav-links { display: none; }
     }
 
@@ -956,7 +956,7 @@
               <div class="preview-mini">✦</div>
               <div class="preview-text">
                 <strong>Компиляция завершена</strong>
-                6 демо-проектов готовы к просмотру
+                11 демо-проектов готовы к просмотру
               </div>
             </div>
           </div>
@@ -998,7 +998,7 @@
 
     <div class="stats reveal">
       <div class="stat-card">
-        <div class="stat-num" data-count="6">0</div>
+        <div class="stat-num" data-count="11">0</div>
         <div class="stat-label">демо-проектов</div>
       </div>
       <div class="stat-card">
@@ -1148,6 +1148,97 @@
       </div>
     </section>
 
+    <section class="projects layout-works snap-section" id="layout-works">
+      <div class="section-head reveal">
+        <span class="section-tag">// layout.adaptation</span>
+        <h2>Доработка и адаптация вёрстки</h2>
+        <p>Демо для рубрики Kwork «Доработка верстки»: адаптив, сетки, формы, таблицы и навигация — с интерактивом и анимациями.</p>
+      </div>
+      <div class="project-grid">
+        <a href="projects/07-responsive-adapt.html" class="project-card featured reveal" data-tilt>
+          <div class="project-preview">
+            <div class="project-preview-bg">
+              <img class="project-preview-media" src="assets/previews/07-responsive-adapt.gif" alt="Адаптация До/После" loading="lazy" />
+            </div>
+            <span class="project-preview-live">GIF</span>
+            <div class="project-preview-overlay"></div>
+            <span class="project-preview-badge">⭐ Для Kwork</span>
+          </div>
+          <div class="project-body">
+            <div class="project-num">01 / 05</div>
+            <h3>Адаптация До / После</h3>
+            <p>Интерактивное сравнение сломанной и исправленной вёрстки на разных экранах.</p>
+            <div class="project-tags"><span class="project-tag">Адаптив</span><span class="project-tag">Flex</span></div>
+            <div class="project-arrow">→</div>
+          </div>
+        </a>
+        <a href="projects/08-catalog-grid.html" class="project-card reveal" data-tilt>
+          <div class="project-preview">
+            <div class="project-preview-bg">
+              <img class="project-preview-media" src="assets/previews/08-catalog-grid.gif" alt="Адаптивный каталог" loading="lazy" />
+            </div>
+            <span class="project-preview-live">GIF</span>
+            <div class="project-preview-overlay"></div>
+          </div>
+          <div class="project-body">
+            <div class="project-num">02 / 05</div>
+            <h3>Адаптивный каталог</h3>
+            <p>CSS Grid 3→2→1, фильтры-чипы, вид плитка/список.</p>
+            <div class="project-tags"><span class="project-tag">Grid</span><span class="project-tag">E-commerce</span></div>
+            <div class="project-arrow">→</div>
+          </div>
+        </a>
+        <a href="projects/09-mobile-nav.html" class="project-card reveal" data-tilt>
+          <div class="project-preview">
+            <div class="project-preview-bg">
+              <img class="project-preview-media" src="assets/previews/09-mobile-nav.gif" alt="Адаптивная навигация" loading="lazy" />
+            </div>
+            <span class="project-preview-live">GIF</span>
+            <div class="project-preview-overlay"></div>
+          </div>
+          <div class="project-body">
+            <div class="project-num">03 / 05</div>
+            <h3>Адаптивная навигация</h3>
+            <p>Шапка и меню: desktop, tablet, mobile с бургером.</p>
+            <div class="project-tags"><span class="project-tag">Nav</span><span class="project-tag">Mobile</span></div>
+            <div class="project-arrow">→</div>
+          </div>
+        </a>
+        <a href="projects/10-form-responsive.html" class="project-card reveal" data-tilt>
+          <div class="project-preview">
+            <div class="project-preview-bg">
+              <img class="project-preview-media" src="assets/previews/10-form-responsive.gif" alt="Адаптивная форма" loading="lazy" />
+            </div>
+            <span class="project-preview-live">GIF</span>
+            <div class="project-preview-overlay"></div>
+          </div>
+          <div class="project-body">
+            <div class="project-num">04 / 05</div>
+            <h3>Адаптивная форма</h3>
+            <p>2 колонки → 1, валидация, touch-зоны 44px+.</p>
+            <div class="project-tags"><span class="project-tag">Формы</span><span class="project-tag">JS</span></div>
+            <div class="project-arrow">→</div>
+          </div>
+        </a>
+        <a href="projects/11-table-adaptive.html" class="project-card reveal" data-tilt>
+          <div class="project-preview">
+            <div class="project-preview-bg">
+              <img class="project-preview-media" src="assets/previews/11-table-adaptive.gif" alt="Таблица → карточки" loading="lazy" />
+            </div>
+            <span class="project-preview-live">GIF</span>
+            <div class="project-preview-overlay"></div>
+          </div>
+          <div class="project-body">
+            <div class="project-num">05 / 05</div>
+            <h3>Таблица → карточки</h3>
+            <p>Прайс-таблица на desktop, карточки на mobile — чистый CSS.</p>
+            <div class="project-tags"><span class="project-tag">Таблицы</span><span class="project-tag">CSS</span></div>
+            <div class="project-arrow">→</div>
+          </div>
+        </a>
+      </div>
+    </section>
+
     <section class="services snap-section" id="services">
       <div class="section-head reveal">
         <span class="section-tag">// services.available</span>
@@ -1169,6 +1260,11 @@
           <div class="service-icon">🔧</div>
           <h3>Доработка CMS</h3>
           <p>WordPress, Tilda, 1С-Битрикс: новые блоки, правки, формы, интеграции с MySQL.</p>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-icon">📐</div>
+          <h3>Адаптация вёрстки</h3>
+          <p>Исправление сеток, форм, таблиц и навигации под mobile, tablet и desktop.</p>
         </div>
       </div>
     </section>

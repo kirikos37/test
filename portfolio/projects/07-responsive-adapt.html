@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FixLayout — Адаптация вёрстки До/После</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="shared.css" />
+  <style>
+    :root {
+      --bg: #0c1220;
+      --surface: #151d2e;
+      --border: rgba(255,255,255,.08);
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --accent: #10b981;
+      --accent2: #34d399;
+      --bad: #ef4444;
+    }
+    body { font-family: 'Montserrat', sans-serif; background: var(--bg); color: var(--text); }
+    .nav { display: flex; justify-content: space-between; align-items: center; padding: 18px 32px; }
+    .nav.scrolled { background: rgba(12,18,32,.92); backdrop-filter: blur(12px); }
+    .burger span { background: var(--text); }
+    .logo { font-weight: 800; font-size: 20px; }
+    .logo span { color: var(--accent2); }
+    .nav-links { display: flex; gap: 24px; }
+    .nav-links a { font-size: 14px; font-weight: 600; color: var(--muted); }
+    .nav-links a:hover { color: var(--text); }
+    .btn-primary { background: var(--accent); color: #052e1b; font-weight: 700; box-shadow: 0 8px 28px rgba(16,185,129,.35); }
+    .mobile-menu-panel { background: var(--surface); }
+    .mobile-menu-panel a { color: var(--text); }
+
+    .hero { text-align: center; padding: 48px 32px 32px; max-width: 900px; margin: 0 auto; }
+    .hero-tag {
+      display: inline-block; padding: 6px 14px; border-radius: 100px;
+      background: rgba(16,185,129,.12); border: 1px solid rgba(16,185,129,.3);
+      color: var(--accent2); font-size: 12px; font-weight: 700; margin-bottom: 20px;
+    }
+    h1 { font-size: clamp(28px, 4vw, 44px); font-weight: 800; line-height: 1.12; margin-bottom: 16px; }
+    .hero p { color: var(--muted); font-size: 16px; line-height: 1.7; max-width: 620px; margin: 0 auto 32px; }
+
+    .demo-panel {
+      max-width: 1100px; margin: 0 auto; padding: 0 32px 80px;
+    }
+    .demo-toolbar {
+      display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: center;
+      margin-bottom: 24px;
+    }
+    .mode-switch {
+      display: flex; background: var(--surface); border-radius: 12px; padding: 4px;
+      border: 1px solid var(--border);
+    }
+    .mode-btn {
+      padding: 10px 20px; border: none; border-radius: 9px;
+      font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer;
+      background: transparent; color: var(--muted); transition: all .3s var(--ease);
+    }
+    .mode-btn.active { background: var(--accent); color: #052e1b; }
+    .mode-btn[data-mode="before"].active { background: var(--bad); color: #fff; }
+
+    .device-btns { display: flex; gap: 8px; }
+    .device-btn {
+      padding: 10px 16px; border-radius: 10px; border: 1px solid var(--border);
+      background: var(--surface); color: var(--muted);
+      font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500;
+      cursor: pointer; transition: all .25s;
+    }
+    .device-btn.active { border-color: var(--accent2); color: var(--accent2); }
+
+    .preview-wrap {
+      background: #1a2234; border-radius: 20px; padding: 24px;
+      border: 1px solid var(--border);
+      box-shadow: 0 24px 60px rgba(0,0,0,.35);
+    }
+    .preview-label {
+      font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted);
+      margin-bottom: 16px; display: flex; justify-content: space-between;
+    }
+    .preview-frame {
+      margin: 0 auto; background: #fff; border-radius: 12px;
+      overflow: hidden; transition: width .5s var(--ease);
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.08);
+    }
+    .mini-site { padding: 16px; color: #1e293b; transition: all .4s var(--ease); min-height: 320px; }
+    .mini-site .ms-header {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-bottom: 12px; border-bottom: 1px solid #e2e8f0; margin-bottom: 16px;
+    }
+    .mini-site .ms-logo { font-weight: 800; font-size: 14px; color: #0f172a; }
+    .mini-site .ms-nav { display: flex; gap: 12px; font-size: 11px; font-weight: 600; color: #64748b; }
+    .mini-site .ms-hero { margin-bottom: 16px; }
+    .mini-site .ms-hero h2 { font-size: 18px; font-weight: 800; margin-bottom: 6px; }
+    .mini-site .ms-hero p { font-size: 11px; color: #64748b; line-height: 1.5; }
+    .mini-site .ms-cards { display: flex; gap: 10px; }
+    .mini-site .ms-card {
+      background: #f8fafc; border-radius: 10px; padding: 12px;
+      border: 1px solid #e2e8f0; flex: 1; transition: all .4s var(--ease);
+    }
+    .mini-site .ms-card h4 { font-size: 12px; font-weight: 700; margin-bottom: 4px; }
+    .mini-site .ms-card p { font-size: 10px; color: #64748b; }
+
+    /* ДО — сломанная вёрстка */
+    .mini-site.before .ms-nav { flex-wrap: nowrap; overflow: hidden; white-space: nowrap; }
+    .mini-site.before .ms-cards { flex-wrap: nowrap; overflow-x: auto; }
+    .mini-site.before .ms-card { min-width: 140px; flex: none; }
+    .mini-site.before .ms-hero h2 { font-size: 14px; word-break: break-all; }
+    .mini-site.before .ms-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+
+    /* ПОСЛЕ — адаптив */
+    .mini-site.after .ms-cards { flex-wrap: wrap; }
+    .mini-site.after .ms-card { min-width: 0; }
+    @media (max-width: 500px) {
+      .preview-frame[style*="375"] .mini-site.after .ms-cards,
+      .preview-frame.narrow .mini-site.after .ms-cards { flex-direction: column; }
+      .preview-frame[style*="375"] .mini-site.after .ms-nav,
+      .preview-frame.narrow .mini-site.after .ms-nav { flex-wrap: wrap; }
+    }
+
+    .fixes-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+      margin-top: 40px;
+    }
+    .fix-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 16px; padding: 24px; transition: transform .3s var(--ease);
+    }
+    .fix-card:hover { transform: translateY(-4px); border-color: rgba(16,185,129,.3); }
+    .fix-card .icon { font-size: 28px; margin-bottom: 12px; }
+    .fix-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+    .fix-card p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+    .footer-bottom { text-align: center; padding: 24px; font-size: 13px; color: var(--muted); border-top: 1px solid var(--border); }
+
+    @media (max-width: 900px) { .fixes-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 600px) {
+      .hero { padding: 32px 20px 24px; }
+      .demo-panel { padding: 0 20px 60px; }
+      .nav { padding: 16px 20px; }
+    }
+
+    .back-home {
+      padding: 10px 16px; border-radius: 10px;
+      background: var(--surface); border: 1px solid rgba(16,185,129,.35);
+      color: var(--accent2); font-weight: 600; font-size: 13px;
+      box-shadow: 0 6px 24px rgba(16,185,129,.15);
+    }
+    .back-to-top { background: var(--accent); color: #052e1b; box-shadow: 0 6px 24px rgba(16,185,129,.45); }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="logo">Fix<span>Layout</span></div>
+    <ul class="nav-links">
+      <li><a href="#demo">Демо</a></li>
+      <li><a href="#fixes">Что исправил</a></li>
+    </ul>
+    <button class="burger" aria-label="Меню"><span></span><span></span><span></span></button>
+  </nav>
+  <div class="mobile-menu">
+    <div class="mobile-menu-panel">
+      <a href="#demo">Демо</a>
+      <a href="#fixes">Что исправил</a>
+    </div>
+  </div>
+
+  <section class="hero reveal">
+    <span class="hero-tag">Доработка вёрстки</span>
+    <h1>Адаптация сайта под все экраны</h1>
+    <p>Интерактивное сравнение «до» и «после»: исправление переполнения, гибкие сетки и корректное поведение на мобильных.</p>
+  </section>
+
+  <div class="demo-panel" id="demo">
+    <div class="demo-toolbar reveal">
+      <div class="mode-switch">
+        <button class="mode-btn active" data-mode="after">✓ После</button>
+        <button class="mode-btn" data-mode="before">✕ До</button>
+      </div>
+      <div class="device-btns">
+        <button class="device-btn active" data-w="100%">Desktop</button>
+        <button class="device-btn" data-w="768px">768px</button>
+        <button class="device-btn" data-w="375px">375px</button>
+      </div>
+    </div>
+
+    <div class="preview-wrap reveal">
+      <div class="preview-label">
+        <span>preview — index.html</span>
+        <span id="widthLabel">1280px</span>
+      </div>
+      <div class="preview-frame" id="previewFrame" style="width:100%;max-width:720px">
+        <div class="mini-site after" id="miniSite">
+          <div class="ms-header">
+            <div class="ms-logo">Магазин</div>
+            <div class="ms-nav">
+              <span>Каталог</span><span>Акции</span><span>Доставка</span><span>Контакты</span>
+            </div>
+          </div>
+          <div class="ms-hero">
+            <h2>Летняя коллекция со скидкой 30%</h2>
+            <p>Адаптивный блок без горизонтальной прокрутки и обрезанного текста.</p>
+          </div>
+          <div class="ms-cards">
+            <div class="ms-card"><h4>Футболки</h4><p>от 990 ₽</p></div>
+            <div class="ms-card"><h4>Куртки</h4><p>от 4 990 ₽</p></div>
+            <div class="ms-card"><h4>Обувь</h4><p>от 2 490 ₽</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fixes-grid" id="fixes">
+      <div class="fix-card reveal">
+        <div class="icon">📱</div>
+        <h3>Mobile-first</h3>
+        <p>Колонки перестраиваются в стек, навигация не вылезает за экран.</p>
+      </div>
+      <div class="fix-card reveal">
+        <div class="icon">📐</div>
+        <h3>Flex + Grid</h3>
+        <p>Карточки товара растягиваются равномерно без фиксированных px-ширин.</p>
+      </div>
+      <div class="fix-card reveal">
+        <div class="icon">✂️</div>
+        <h3>Без overflow</h3>
+        <p>Убрана горизонтальная прокрутка и обрезание заголовков на узких экранах.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer-bottom">Учебный проект · Адаптация вёрстки · HTML/CSS/JS · 2026</footer>
+
+  <a href="../index.html" class="back-home" aria-label="Вернуться в портфолио">
+    <span class="back-home-icon" aria-hidden="true">←</span>
+    <span class="back-home-label">Портфолио</span>
+  </a>
+
+  <script src="shared.js"></script>
+  <script>
+    const miniSite = document.getElementById('miniSite');
+    const frame = document.getElementById('previewFrame');
+    const widthLabel = document.getElementById('widthLabel');
+
+    document.querySelectorAll('.mode-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.mode-btn').forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+        miniSite.classList.remove('before', 'after');
+        miniSite.classList.add(btn.dataset.mode);
+      });
+    });
+
+    document.querySelectorAll('.device-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.device-btn').forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+        const w = btn.dataset.w;
+        frame.style.width = w;
+        frame.style.maxWidth = w === '100%' ? '720px' : w;
+        frame.classList.toggle('narrow', w === '375px');
+        widthLabel.textContent = w === '100%' ? '720px' : w;
+      });
+    });
+  </script>
+</body>
+</html>

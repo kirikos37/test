@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DataFlex — Адаптивные таблицы</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="shared.css" />
+  <style>
+    :root {
+      --bg: #0f0f14; --surface: #1a1a24; --text: #e4e4e7; --muted: #a1a1aa;
+      --accent: #8b5cf6; --accent2: #a78bfa; --border: rgba(255,255,255,.08);
+    }
+    body { font-family: 'Montserrat', sans-serif; background: var(--bg); color: var(--text); }
+    .nav { display: flex; justify-content: space-between; align-items: center; padding: 18px 32px; }
+    .nav.scrolled { background: rgba(15,15,20,.92); backdrop-filter: blur(12px); }
+    .burger span { background: var(--text); }
+    .logo { font-weight: 800; font-size: 20px; }
+    .logo span { color: var(--accent2); font-family: 'JetBrains Mono', monospace; }
+    .nav-links { display: flex; gap: 24px; }
+    .nav-links a { font-size: 14px; font-weight: 600; color: var(--muted); }
+    .btn-primary { background: var(--accent); color: #fff; box-shadow: 0 8px 28px rgba(139,92,246,.35); }
+    .mobile-menu-panel { background: var(--surface); }
+    .mobile-menu-panel a { color: var(--text); }
+
+    .hero { text-align: center; padding: 48px 32px 32px; }
+    .hero-tag {
+      font-family: 'JetBrains Mono', monospace; font-size: 12px;
+      color: var(--accent2); margin-bottom: 16px; display: block;
+    }
+    h1 { font-size: clamp(26px, 4vw, 40px); font-weight: 800; margin-bottom: 14px; }
+    .hero p { color: var(--muted); font-size: 15px; max-width: 560px; margin: 0 auto 28px; line-height: 1.7; }
+
+    .view-hint {
+      text-align: center; font-size: 13px; color: var(--muted); margin-bottom: 20px;
+    }
+    .view-hint b { color: var(--accent2); }
+
+    .pricing-wrap { max-width: 960px; margin: 0 auto; padding: 0 32px 80px; }
+
+    /* Desktop table */
+    .price-table {
+      width: 100%; border-collapse: collapse;
+      background: var(--surface); border-radius: 16px; overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .price-table th, .price-table td {
+      padding: 18px 20px; text-align: left; border-bottom: 1px solid var(--border);
+    }
+    .price-table th {
+      background: rgba(139,92,246,.12); font-size: 13px; font-weight: 700;
+      color: var(--accent2); text-transform: uppercase; letter-spacing: .04em;
+    }
+    .price-table td { font-size: 14px; }
+    .price-table tr:last-child td { border-bottom: none; }
+    .price-table tr:hover td { background: rgba(139,92,246,.05); }
+    .price-val { font-weight: 800; color: var(--accent2); }
+    .badge-pop {
+      display: inline-block; padding: 3px 8px; background: var(--accent);
+      color: #fff; border-radius: 6px; font-size: 10px; font-weight: 700;
+    }
+
+    /* Mobile cards — hidden on desktop */
+    .price-cards { display: none; gap: 16px; }
+    .price-card {
+      background: var(--surface); border-radius: 16px; padding: 24px;
+      border: 1px solid var(--border);
+      transition: transform .3s var(--ease), border-color .3s;
+    }
+    .price-card:hover { transform: translateY(-4px); border-color: rgba(139,92,246,.35); }
+    .price-card h3 { font-size: 18px; font-weight: 800; margin-bottom: 4px; }
+    .price-card .price-val { font-size: 24px; margin: 12px 0; }
+    .price-card ul { list-style: none; margin-top: 16px; }
+    .price-card li {
+      padding: 8px 0; font-size: 13px; color: var(--muted);
+      border-bottom: 1px solid var(--border);
+      display: flex; justify-content: space-between;
+    }
+    .price-card li span:last-child { color: var(--text); font-weight: 600; }
+
+    @media (max-width: 700px) {
+      .price-table { display: none; }
+      .price-cards { display: flex; flex-direction: column; }
+    }
+
+    .steps {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+      margin-top: 48px;
+    }
+    .step {
+      background: var(--surface); border-radius: 14px; padding: 22px;
+      border: 1px solid var(--border); text-align: center;
+    }
+    .step .icon { font-size: 32px; margin-bottom: 12px; }
+    .step h3 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+    .step p { font-size: 12px; color: var(--muted); line-height: 1.55; }
+
+    .footer-bottom { text-align: center; padding: 24px; font-size: 13px; color: var(--muted); border-top: 1px solid var(--border); }
+
+    @media (max-width: 700px) { .steps { grid-template-columns: 1fr; } .pricing-wrap { padding: 0 20px 60px; } }
+
+    .back-home {
+      padding: 10px 16px; border-radius: 10px;
+      background: var(--surface); border: 1px solid rgba(139,92,246,.35);
+      color: var(--accent2); font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    }
+    .back-to-top { background: var(--accent); color: #fff; box-shadow: 0 6px 24px rgba(139,92,246,.45); }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="logo">Data<span>Flex</span></div>
+    <ul class="nav-links"><li><a href="#pricing">Тарифы</a></li></ul>
+    <button class="burger" aria-label="Меню"><span></span><span></span><span></span></button>
+  </nav>
+  <div class="mobile-menu"><div class="mobile-menu-panel"><a href="#pricing">Тарифы</a></div></div>
+
+  <section class="hero reveal">
+    <span class="hero-tag">// table → cards</span>
+    <h1>Таблица тарифов на мобильных</h1>
+    <p>На desktop — классическая таблица. На экранах &lt;700px автоматически превращается в карточки без горизонтальной прокрутки.</p>
+  </section>
+
+  <p class="view-hint reveal">Сожмите окно браузера или откройте на телефоне — увидите <b>переключение table → cards</b></p>
+
+  <div class="pricing-wrap reveal" id="pricing">
+    <table class="price-table">
+      <thead>
+        <tr><th>Тариф</th><th>Страницы</th><th>Срок</th><th>Цена</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Базовый</td><td>до 3 блоков</td><td>1–2 дня</td><td class="price-val">1 500 ₽</td></tr>
+        <tr><td>Стандарт <span class="badge-pop">популярный</span></td><td>до 8 блоков</td><td>2–4 дня</td><td class="price-val">3 500 ₽</td></tr>
+        <tr><td>Полный</td><td>весь сайт</td><td>5–7 дней</td><td class="price-val">7 000 ₽</td></tr>
+      </tbody>
+    </table>
+
+    <div class="price-cards">
+      <div class="price-card">
+        <h3>Базовый</h3>
+        <div class="price-val">1 500 ₽</div>
+        <ul><li><span>Страницы</span><span>до 3 блоков</span></li><li><span>Срок</span><span>1–2 дня</span></li></ul>
+      </div>
+      <div class="price-card" style="border-color:rgba(139,92,246,.4)">
+        <h3>Стандарт <span class="badge-pop">популярный</span></h3>
+        <div class="price-val">3 500 ₽</div>
+        <ul><li><span>Страницы</span><span>до 8 блоков</span></li><li><span>Срок</span><span>2–4 дня</span></li></ul>
+      </div>
+      <div class="price-card">
+        <h3>Полный</h3>
+        <div class="price-val">7 000 ₽</div>
+        <ul><li><span>Страницы</span><span>весь сайт</span></li><li><span>Срок</span><span>5–7 дней</span></li></ul>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step reveal"><div class="icon">🖥️</div><h3>Desktop</h3><p>Таблица с hover-эффектами</p></div>
+      <div class="step reveal"><div class="icon">📱</div><h3>Mobile</h3><p>Карточки вместо скролла</p></div>
+      <div class="step reveal"><div class="icon">⚡</div><h3>Без JS</h3><p>Чистый CSS @media</p></div>
+    </div>
+  </div>
+
+  <footer class="footer-bottom">Учебный проект · Адаптивные таблицы · HTML/CSS · 2026</footer>
+
+  <a href="../index.html" class="back-home" aria-label="Вернуться в портфолио">
+    <span class="back-home-icon" aria-hidden="true">~</span>
+    <span class="back-home-label">/portfolio</span>
+  </a>
+
+  <script src="shared.js"></script>
+</body>
+</html>
