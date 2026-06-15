@@ -12,8 +12,8 @@ const outDir = path.join(__dirname, 'assets', 'previews');
 
 const PREVIEW_W = 720;
 const PREVIEW_H = 405;
-const FRAME_COUNT = 24;
-const FRAME_DELAY_MS = 125;
+const FRAME_COUNT = 28;
+const FRAME_DELAY_MS = 160;
 
 const projects = [
   { file: '06-react-interactive.html', gif: '06-react-interactive.gif' },
@@ -51,6 +51,26 @@ function framesToGif(frames, width, height, delayCs) {
   return Buffer.from(gif.bytes());
 }
 
+/** Подготовка страницы: фиксированный хедер, без прокрутки, видимый hero */
+async function preparePage(page) {
+  await page.evaluate(() => {
+    window.scrollTo(0, 0);
+    document.documentElement.style.scrollBehavior = 'auto';
+
+    const nav = document.querySelector('.nav');
+    if (nav) nav.classList.add('scrolled');
+
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach((el) => {
+      el.classList.add('visible');
+    });
+
+    document.querySelectorAll('[data-count]').forEach((el) => {
+      const target = parseInt(el.dataset.count, 10);
+      if (!Number.isNaN(target)) el.textContent = String(target);
+    });
+  });
+}
+
 fs.mkdirSync(outDir, { recursive: true });
 
 const launchOptions = { headless: true };
@@ -67,12 +87,13 @@ for (const proj of projects) {
   await page.setViewport({ width: 1280, height: 800, deviceScaleFactor: 1 });
   await page.goto(`file://${htmlPath.replace(/\\/g, '/')}`, { waitUntil: 'networkidle0' });
   await page.evaluate(() => document.fonts.ready);
-  await new Promise((r) => setTimeout(r, 1500));
+  await new Promise((r) => setTimeout(r, 1200));
+
+  await preparePage(page);
+  await new Promise((r) => setTimeout(r, 600));
 
   const frames = [];
   for (let i = 0; i < FRAME_COUNT; i++) {
-    const scrollY = Math.round(Math.sin((i / FRAME_COUNT) * Math.PI * 2) * 80 + 40);
-    await page.evaluate((y) => window.scrollTo({ top: y, behavior: 'instant' }), scrollY);
     await new Promise((r) => setTimeout(r, FRAME_DELAY_MS));
     const buf = await page.screenshot({
       type: 'png',
