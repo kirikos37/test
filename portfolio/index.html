@@ -767,6 +767,125 @@
       .services-grid { grid-template-columns: 1fr; }
       .nav-links { display: none; }
     }
+
+    /* Mobile: полноэкранные секции + scroll-snap */
+    .scroll-hint { display: none; }
+
+    @media (max-width: 768px) {
+      html {
+        scroll-snap-type: y proximity;
+        scroll-behavior: smooth;
+      }
+
+      .snap-section {
+        scroll-snap-align: start;
+        scroll-snap-stop: always;
+      }
+
+      .projects.snap-section {
+        scroll-snap-stop: normal;
+      }
+
+      .hero {
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+        min-height: auto;
+        padding: 8px 0 40px;
+        position: relative;
+      }
+
+      .hero-content {
+        order: 0;
+        min-height: calc(100svh - 76px);
+        min-height: calc(100dvh - 76px);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .code-panel {
+        order: 1;
+        flex-shrink: 0;
+      }
+
+      .code-panel-inner { transform: none; }
+      .code-body { font-size: 12px; line-height: 1.65; }
+
+      h1 {
+        font-size: clamp(30px, 9vw, 40px);
+        margin-bottom: 18px;
+      }
+
+      .hero-desc {
+        font-size: 15px;
+        margin-bottom: 24px;
+        max-width: none;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .hero-actions .btn {
+        width: 100%;
+        justify-content: center;
+        cursor: pointer;
+      }
+
+      nav { padding: 14px 0; }
+      .nav-cta { font-size: 11px; padding: 8px 12px; }
+      .wrap { padding: 0 20px; }
+
+      .snap-intro {
+        padding: 40px 0 56px;
+        scroll-snap-align: start;
+      }
+
+      .stats { margin-bottom: 40px; gap: 12px; }
+
+      .projects { padding: 48px 0 64px; }
+      .services { padding: 48px 0 64px; }
+      .cta { margin-bottom: 24px; }
+
+      .scroll-hint {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 5;
+        font-size: 10px;
+        font-weight: 500;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+        color: var(--muted);
+        opacity: .65;
+        pointer-events: none;
+        transition: opacity .5s var(--ease), visibility .5s;
+        animation: hintBounce 2.2s ease-in-out infinite;
+      }
+
+      .scroll-hint svg {
+        width: 18px;
+        height: 18px;
+        stroke: var(--amber);
+        fill: none;
+        stroke-width: 2;
+        opacity: .8;
+      }
+
+      .scroll-hint.hidden { opacity: 0; visibility: hidden; animation: none; }
+
+      @keyframes hintBounce {
+        0%, 100% { transform: translateX(-50%) translateY(0); }
+        50% { transform: translateX(-50%) translateY(7px); }
+      }
+    }
   </style>
 </head>
 <body>
@@ -796,7 +915,7 @@
       <a href="#contact" class="nav-cta" data-hover>Заказать на Kwork</a>
     </nav>
 
-    <section class="hero">
+    <section class="hero snap-section">
       <div class="hero-content">
         <div class="hero-badge">
           <span class="live"></span>
@@ -846,8 +965,14 @@
           </div>
         </div>
       </div>
+
+      <div class="scroll-hint" id="scrollHint" aria-hidden="true">
+        <span>Листайте</span>
+        <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
     </section>
 
+    <section class="snap-block snap-intro snap-section">
     <div class="marquee-section">
       <div class="marquee-track" id="marquee">
         <div class="marquee-item"><span>01</span> React</div>
@@ -892,8 +1017,9 @@
         <div class="stat-label">ответ на сообщение</div>
       </div>
     </div>
+    </section>
 
-    <section class="projects" id="works">
+    <section class="projects snap-section" id="works">
       <div class="section-head reveal">
         <span class="section-tag">// portfolio.works</span>
         <h2>Каждый проект — отдельная история</h2>
@@ -1025,7 +1151,7 @@
       </div>
     </section>
 
-    <section class="services" id="services">
+    <section class="services snap-section" id="services">
       <div class="section-head reveal">
         <span class="section-tag">// services.available</span>
         <h2>Чем могу помочь</h2>
@@ -1050,7 +1176,7 @@
       </div>
     </section>
 
-    <section class="cta reveal" id="contact">
+    <section class="cta snap-section reveal" id="contact">
       <h2>Готов взять первый проект</h2>
       <p>Напишите на Kwork — обсудим задачу, оценю сроки и стоимость. Честно скажу, если что-то за пределами моего уровня.</p>
       <a href="https://kwork.ru" class="btn btn-primary" data-hover target="_blank" rel="noopener">
@@ -1134,16 +1260,36 @@
       });
     });
 
-    // Scroll progress + back to top
+    // Scroll progress + back to top + mobile snap hint
     const progress = document.getElementById('scrollProgress');
     const backToTop = document.getElementById('backToTop');
+    const scrollHint = document.getElementById('scrollHint');
+    let hintHidden = false;
+
     window.addEventListener('scroll', () => {
       const h = document.documentElement.scrollHeight - window.innerHeight;
       progress.style.width = (window.scrollY / h * 100) + '%';
       backToTop?.classList.toggle('visible', window.scrollY > 420);
+      if (scrollHint && !hintHidden && window.scrollY > 48) {
+        hintHidden = true;
+        scrollHint.classList.add('hidden');
+      }
     }, { passive: true });
+
     backToTop?.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Плавный переход к секциям по якорям (мобильные)
+    document.querySelectorAll('a[href^="#"]').forEach((a) => {
+      a.addEventListener('click', (e) => {
+        const id = a.getAttribute('href');
+        if (id === '#') return;
+        const target = document.querySelector(id);
+        if (!target) return;
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
     });
 
     // Reveal on scroll
