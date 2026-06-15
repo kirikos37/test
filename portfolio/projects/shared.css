@@ -259,3 +259,21 @@ ul { list-style: none; }
 @media (max-width: 600px) {
   .back-to-top { right: 16px; bottom: 18px; width: 44px; height: 44px; }
 }
+
+/* Back to portfolio — базовая позиция, оформление на каждой странице */
+.back-home {
+  position: fixed;
+  left: 22px;
+  bottom: 26px;
+  z-index: 90;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  transition: transform .3s var(--ease), box-shadow .3s var(--ease), border-color .25s, color .25s, background .25s;
+}
+.back-home:hover { transform: translateY(-2px); }
+@media (max-width: 600px) {
+  .back-home { left: 16px; bottom: 18px; gap: 6px; }
+  .back-home .back-home-label { display: none; }
+}

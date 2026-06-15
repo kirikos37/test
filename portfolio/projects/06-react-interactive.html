@@ -536,6 +536,26 @@
       .nav { padding: 16px 20px; }
       .process-grid { grid-template-columns: 1fr; }
     }
+
+    .back-home {
+      padding: 10px 16px 10px 10px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #0a0e17;
+      font-weight: 700;
+      font-size: 13px;
+      box-shadow: 0 8px 28px rgba(255, 107, 43, .4);
+    }
+    .back-home-icon {
+      width: 30px; height: 30px;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(0, 0, 0, .12);
+      border-radius: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 500;
+    }
+    .back-home:hover { box-shadow: 0 12px 36px rgba(255, 107, 43, .5); }
   </style>
 </head>
 <body>
@@ -758,6 +778,11 @@
       <button class="btn btn-primary" style="width:100%" data-close>Понятно, спасибо!</button>
     </div>
   </div>
+
+  <a href="../index.html" class="back-home" aria-label="Вернуться в портфолио">
+    <span class="back-home-icon" aria-hidden="true">&lt;/&gt;</span>
+    <span class="back-home-label">Портфолио</span>
+  </a>
 
   <script src="shared.js"></script>
   <script>

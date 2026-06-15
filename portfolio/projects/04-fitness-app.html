@@ -213,6 +213,21 @@
       .nav { padding: 16px 20px; }
       .phone { width: 240px; height: 460px; }
     }
+
+    .back-home {
+      padding: 12px 20px;
+      border-radius: 6px;
+      background: linear-gradient(90deg, var(--cyan2), var(--pink));
+      color: #050a12;
+      font-weight: 900;
+      font-size: 12px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      box-shadow: 0 8px 28px rgba(34, 211, 238, .35);
+      clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+    }
+    .back-home-icon { font-size: 10px; }
+    .back-home:hover { box-shadow: 0 12px 36px rgba(244, 114, 182, .4); }
   </style>
 </head>
 <body>
@@ -306,6 +321,12 @@
   </section>
 
   <footer class="footer-bottom">Учебный проект · App Landing · HTML/CSS/JS · 2026</footer>
+
+  <a href="../index.html" class="back-home" aria-label="Вернуться в портфолио">
+    <span class="back-home-icon" aria-hidden="true">◀</span>
+    <span class="back-home-label">Портфолио</span>
+  </a>
+
   <script src="shared.js"></script>
 </body>
 </html>

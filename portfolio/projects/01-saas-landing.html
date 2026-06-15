@@ -204,6 +204,20 @@
       .nav { padding: 16px 20px; }
       .cta-banner { margin: 0 20px 40px; padding: 36px 24px; }
     }
+
+    .back-home {
+      padding: 11px 18px;
+      border-radius: 10px;
+      background: rgba(15, 22, 41, .88);
+      border: 1px solid rgba(129, 140, 248, .4);
+      color: var(--accent2);
+      font-weight: 600;
+      font-size: 13px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 32px rgba(79, 110, 247, .15);
+    }
+    .back-home-icon { width: 18px; height: 18px; flex-shrink: 0; stroke: currentColor; fill: none; }
+    .back-home:hover { border-color: var(--accent2); box-shadow: 0 10px 36px rgba(79, 110, 247, .28); }
   </style>
 </head>
 <body>
@@ -330,6 +344,12 @@
   </div>
 
   <footer class="footer-bottom">Учебный проект · SaaS Landing · HTML/CSS/JS · 2026</footer>
+
+  <a href="../index.html" class="back-home" aria-label="Вернуться в портфолио">
+    <svg class="back-home-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span class="back-home-label">К портфолио</span>
+  </a>
+
   <script src="shared.js"></script>
 </body>
 </html>

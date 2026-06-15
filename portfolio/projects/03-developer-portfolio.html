@@ -509,6 +509,24 @@
       .services-grid { grid-template-columns: 1fr; }
       .stats { gap: 24px; flex-wrap: wrap; }
     }
+
+    .back-home {
+      padding: 10px 16px;
+      border-radius: 10px;
+      background: var(--surface);
+      border: 1px solid rgba(39, 63, 216, .25);
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 500;
+      box-shadow: 0 4px 24px rgba(39, 63, 216, .12);
+    }
+    .back-home-icon { opacity: .55; font-weight: 700; }
+    .back-home:hover {
+      border-color: var(--accent);
+      box-shadow: 0 6px 28px rgba(39, 63, 216, .22);
+      color: var(--orange);
+    }
   </style>
 </head>
 <body>
@@ -689,6 +707,11 @@
   </div>
 
   <footer class="footer">Учебный проект · Портфолио Frontend-разработчика · HTML/CSS · 2026</footer>
+
+  <a href="../index.html" class="back-home" aria-label="Вернуться в портфолио">
+    <span class="back-home-icon" aria-hidden="true">~</span>
+    <span class="back-home-label">/portfolio</span>
+  </a>
 
   <script src="shared.js"></script>
   <script>
