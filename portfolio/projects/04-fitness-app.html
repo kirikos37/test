@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FitPulse — Фитнес-приложение</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="shared.css" />
+  <style>
+    :root {
+      --bg: #050a12;
+      --surface: #0f172a;
+      --border: rgba(255,255,255,.08);
+      --text: #fff;
+      --muted: #94a3b8;
+      --cyan: #22d3ee;
+      --cyan2: #06b6d4;
+      --pink: #f472b6;
+    }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(160deg, var(--bg) 0%, #1a0a2e 50%, #0a1628 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+    .nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 18px 32px;
+    }
+    .nav.scrolled { background: rgba(5,10,18,.9); backdrop-filter: blur(12px); }
+    .burger span { background: var(--text); }
+    .logo { font-size: 22px; font-weight: 900; letter-spacing: -.02em; }
+    .logo span {
+      background: linear-gradient(90deg, var(--cyan), var(--pink));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .nav-links { display: flex; gap: 28px; }
+    .nav-links a { font-size: 14px; font-weight: 600; color: var(--muted); transition: color .2s; }
+    .nav-links a:hover { color: var(--text); }
+    .btn-primary {
+      background: linear-gradient(90deg, var(--cyan2), var(--cyan));
+      color: #0f172a; font-weight: 800;
+      box-shadow: 0 8px 28px rgba(34,211,238,.3);
+    }
+    .mobile-menu-panel { background: var(--surface); }
+    .mobile-menu-panel a { color: var(--text); }
+
+    .hero {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 48px; padding: 40px 32px 80px;
+      max-width: 1100px; margin: 0 auto; align-items: center;
+    }
+    .hero-tag {
+      display: inline-block;
+      background: rgba(34,211,238,.1);
+      border: 1px solid rgba(34,211,238,.25);
+      color: var(--cyan);
+      padding: 6px 14px; border-radius: 100px;
+      font-size: 12px; font-weight: 700; margin-bottom: 20px;
+    }
+    h1 {
+      font-size: clamp(32px, 4.5vw, 48px);
+      font-weight: 900; line-height: 1.1;
+      letter-spacing: -.03em; margin-bottom: 18px;
+    }
+    h1 span {
+      background: linear-gradient(90deg, var(--cyan), var(--pink));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hero-text p { font-size: 16px; color: var(--muted); line-height: 1.75; margin-bottom: 28px; }
+    .stats { display: flex; gap: 28px; margin-bottom: 32px; flex-wrap: wrap; }
+    .stat h3 {
+      font-size: 32px; font-weight: 900;
+      background: linear-gradient(90deg, var(--cyan), var(--pink));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .stat p { font-size: 12px; color: var(--muted); font-weight: 600; }
+
+    .store-btns { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
+    .store-btn {
+      display: flex; align-items: center; gap: 10px;
+      padding: 12px 20px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      font-size: 13px; font-weight: 600;
+      transition: background .25s, transform .25s var(--ease);
+    }
+    .store-btn:hover { background: rgba(255,255,255,.1); transform: translateY(-2px); }
+    .store-btn span { font-size: 22px; }
+
+    .phone-wrap { display: flex; justify-content: center; position: relative; }
+    .phone-glow {
+      position: absolute;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(34,211,238,.2), transparent 70%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      animation: pulseGlow 4s ease infinite;
+    }
+    @keyframes pulseGlow {
+      0%, 100% { opacity: .6; transform: translate(-50%, -50%) scale(1); }
+      50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+    }
+    .phone {
+      width: 280px; height: 540px;
+      background: #1e293b;
+      border-radius: 40px;
+      border: 4px solid #334155;
+      padding: 16px 14px;
+      box-shadow: 0 50px 100px rgba(0,0,0,.5);
+      position: relative;
+      z-index: 1;
+      animation: phoneFloat 5s ease-in-out infinite;
+    }
+    @keyframes phoneFloat {
+      0%, 100% { transform: translateY(0) rotate(-2deg); }
+      50% { transform: translateY(-12px) rotate(2deg); }
+    }
+    .phone-notch {
+      width: 100px; height: 24px;
+      background: #0f172a;
+      border-radius: 0 0 16px 16px;
+      margin: 0 auto 12px;
+    }
+    .phone-screen {
+      background: linear-gradient(180deg, #0f172a, #164e63);
+      border-radius: 28px; height: calc(100% - 36px);
+      padding: 20px 14px; overflow: hidden;
+    }
+    .phone-header { font-size: 14px; font-weight: 800; margin-bottom: 16px; }
+    .workout-card {
+      background: rgba(255,255,255,.06);
+      border-radius: 14px; padding: 14px;
+      margin-bottom: 10px;
+      display: flex; align-items: center; gap: 12px;
+      animation: slideIn .6s var(--ease) both;
+    }
+    .workout-card:nth-child(2) { animation-delay: .15s; }
+    .workout-card:nth-child(3) { animation-delay: .3s; }
+    .workout-card:nth-child(4) { animation-delay: .45s; }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    .workout-icon {
+      width: 40px; height: 40px;
+      background: rgba(34,211,238,.15);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+    }
+    .workout-card h4 { font-size: 13px; font-weight: 700; }
+    .workout-card p { font-size: 11px; color: var(--muted); }
+    .progress-label { font-size: 11px; color: var(--muted); margin-top: 14px; }
+    .progress-bar {
+      height: 8px; background: rgba(255,255,255,.08);
+      border-radius: 4px; margin-top: 8px; overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, var(--cyan2), var(--cyan), var(--pink));
+      border-radius: 4px;
+      animation: fillProgress 2s var(--ease) 1s forwards;
+    }
+    @keyframes fillProgress { to { width: 72%; } }
+
+    .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .feat {
+      text-align: center; padding: 32px 20px;
+      background: rgba(255,255,255,.03);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      transition: transform .35s var(--ease), border-color .35s;
+    }
+    .feat:hover { transform: translateY(-8px); border-color: rgba(34,211,238,.3); }
+    .feat-icon { font-size: 40px; margin-bottom: 16px; }
+    .feat h3 { font-size: 16px; font-weight: 800; margin-bottom: 8px; }
+    .feat p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+    .plans { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; max-width: 700px; margin: 40px auto 0; }
+    .plan {
+      background: rgba(255,255,255,.04);
+      border: 1px solid var(--border);
+      border-radius: 20px; padding: 32px;
+      transition: transform .35s var(--ease);
+    }
+    .plan:hover { transform: scale(1.02); }
+    .plan.pro { border-color: var(--cyan); background: rgba(34,211,238,.06); }
+    .plan h3 { font-size: 14px; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: .05em; }
+    .plan-price { font-size: 36px; font-weight: 900; margin: 12px 0; }
+    .plan-price span { font-size: 14px; color: var(--muted); font-weight: 600; }
+    .plan ul { list-style: none; margin: 16px 0; }
+    .plan li { font-size: 13px; color: var(--muted); padding: 8px 0; border-bottom: 1px solid var(--border); }
+
+    .cta {
+      text-align: center; padding: 72px 32px;
+      background: linear-gradient(135deg, rgba(34,211,238,.08), rgba(244,114,182,.06));
+      border-top: 1px solid var(--border);
+    }
+    .cta h2 { font-size: 28px; font-weight: 900; margin-bottom: 12px; }
+
+    .footer-bottom { text-align: center; padding: 24px; font-size: 13px; color: #475569; border-top: 1px solid var(--border); }
+
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; }
+      .phone-wrap { order: -1; }
+      .features-grid { grid-template-columns: 1fr; }
+      .plans { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .hero { padding: 30px 20px 60px; }
+      .nav { padding: 16px 20px; }
+      .phone { width: 240px; height: 460px; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="logo">Fit<span>Pulse</span></div>
+    <ul class="nav-links">
+      <li><a href="#features">Возможности</a></li>
+      <li><a href="#pricing">Тарифы</a></li>
+    </ul>
+    <button class="btn btn-primary nav-cta-desktop">Скачать</button>
+    <button class="burger" aria-label="Меню"><span></span><span></span><span></span></button>
+  </nav>
+  <div class="mobile-menu">
+    <div class="mobile-menu-panel">
+      <a href="#features">Возможности</a>
+      <a href="#pricing">Тарифы</a>
+      <button class="btn btn-primary" data-close style="margin-top:20px;width:100%">Скачать приложение</button>
+    </div>
+  </div>
+
+  <section class="hero">
+    <div class="hero-text reveal">
+      <span class="hero-tag">🏆 №1 в категории «Фитнес» — RuStore</span>
+      <h1>Тренируйся умнее с <span>FitPulse</span></h1>
+      <p>Персональные планы от сертифицированных тренеров, трекинг калорий и мотивация каждый день. Как FitStars, в вашем кармане.</p>
+      <div class="stats">
+        <div class="stat"><h3 data-count="50" data-suffix="K+">0</h3><p>Пользователей</p></div>
+        <div class="stat"><h3>4.9</h3><p>Рейтинг</p></div>
+        <div class="stat"><h3 data-count="200" data-suffix="+">0</h3><p>Тренировок</p></div>
+      </div>
+      <button class="btn btn-primary">Начать бесплатно</button>
+      <div class="store-btns">
+        <div class="store-btn"><span>🍎</span> App Store</div>
+        <div class="store-btn"><span>▶</span> Google Play</div>
+        <div class="store-btn"><span>📦</span> RuStore</div>
+      </div>
+    </div>
+    <div class="phone-wrap reveal-right">
+      <div class="phone-glow"></div>
+      <div class="phone">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="phone-header">Сегодня 💪</div>
+          <div class="workout-card"><div class="workout-icon">🏃</div><div><h4>Кардио 30 мин</h4><p>320 ккал · Средний</p></div></div>
+          <div class="workout-card"><div class="workout-icon">💪</div><div><h4>Силовая</h4><p>45 мин · Высокий</p></div></div>
+          <div class="workout-card"><div class="workout-icon">🧘</div><div><h4>Растяжка</h4><p>15 мин · Лёгкий</p></div></div>
+          <div class="progress-label">Прогресс недели — 72%</div>
+          <div class="progress-bar"><div class="progress-fill"></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="features">
+    <div class="section-inner" style="text-align:center">
+      <span class="section-tag reveal" style="color:var(--cyan)">Возможности</span>
+      <h2 class="section-title reveal">Всё для вашей формы</h2>
+      <div class="features-grid" style="margin-top:40px">
+        <div class="feat reveal"><div class="feat-icon">📋</div><h3>Планы тренировок</h3><p>Индивидуальные программы: похудение, набор массы, выносливость</p></div>
+        <div class="feat reveal" data-delay="100"><div class="feat-icon">📈</div><h3>Статистика</h3><p>Графики прогресса, калории, шаги — синхронизация с Apple Health</p></div>
+        <div class="feat reveal" data-delay="200"><div class="feat-icon">🔔</div><h3>Напоминания</h3><p>Push-уведомления: не пропустите тренировку и приём воды</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="pricing" style="background:rgba(255,255,255,.02)">
+    <div class="section-inner" style="text-align:center">
+      <span class="section-tag reveal" style="color:var(--cyan)">Тарифы</span>
+      <h2 class="section-title reveal">Начните бесплатно</h2>
+      <div class="plans">
+        <div class="plan reveal">
+          <h3>Бесплатно</h3>
+          <div class="plan-price">0 <span>₽/мес</span></div>
+          <ul><li>5 тренировок</li><li>Базовая статистика</li><li>Реклама</li></ul>
+          <button class="btn btn-outline" style="width:100%;border:1px solid var(--border);color:var(--text);background:transparent;border-radius:12px;padding:14px;font-weight:700">Скачать</button>
+        </div>
+        <div class="plan pro reveal" data-delay="100">
+          <h3>PRO</h3>
+          <div class="plan-price">499 <span>₽/мес</span></div>
+          <ul><li>Все 200+ тренировок</li><li>Планы питания</li><li>Без рекламы</li></ul>
+          <button class="btn btn-primary" style="width:100%">Попробовать 7 дней</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta reveal">
+    <h2>Скачайте FitPulse сегодня</h2>
+    <p style="color:var(--muted);margin-bottom:24px">Первые 7 дней PRO — бесплатно</p>
+    <button class="btn btn-primary">Скачать приложение</button>
+  </section>
+
+  <footer class="footer-bottom">Учебный проект · App Landing · HTML/CSS/JS · 2026</footer>
+  <script src="shared.js"></script>
+</body>
+</html>

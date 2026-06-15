@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CloudFlow — SaaS лендинг</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="shared.css" />
+  <style>
+    :root {
+      --bg: #070b14;
+      --surface: #0f1629;
+      --border: rgba(255,255,255,.08);
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --accent: #4f6ef7;
+      --accent2: #818cf8;
+      --green: #34d399;
+    }
+    body { font-family: 'Montserrat', sans-serif; background: var(--bg); color: var(--text); }
+    .nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 18px 32px; background: transparent;
+    }
+    .nav.scrolled { background: rgba(7,11,20,.9); }
+    .burger span { background: var(--text); }
+    .logo { font-size: 22px; font-weight: 800; }
+    .logo span { color: var(--accent2); }
+    .nav-links { display: flex; gap: 28px; }
+    .nav-links a { font-size: 14px; font-weight: 600; color: var(--muted); transition: color .2s; }
+    .nav-links a:hover { color: var(--text); }
+    .btn-primary { background: var(--accent); color: #fff; box-shadow: 0 8px 28px rgba(79,110,247,.35); }
+    .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
+    .mobile-menu-panel { background: var(--surface); }
+    .mobile-menu-panel a { color: var(--text); }
+
+    .hero {
+      text-align: center;
+      padding: 60px 32px 40px;
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -100px; left: 50%;
+      transform: translateX(-50%);
+      width: 600px; height: 400px;
+      background: radial-gradient(ellipse, rgba(79,110,247,.2), transparent 70%);
+      pointer-events: none;
+    }
+    .badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(79,110,247,.12);
+      border: 1px solid rgba(79,110,247,.3);
+      color: var(--accent2);
+      padding: 7px 16px; border-radius: 100px;
+      font-size: 12px; font-weight: 700; margin-bottom: 24px;
+    }
+    h1 {
+      font-size: clamp(34px, 5vw, 54px);
+      font-weight: 800; line-height: 1.1;
+      letter-spacing: -.03em; margin-bottom: 20px;
+    }
+    h1 span {
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hero p { font-size: 17px; color: var(--muted); line-height: 1.7; margin-bottom: 32px; }
+    .hero-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+    .mockup {
+      margin: 50px auto 0;
+      max-width: 860px;
+      background: linear-gradient(180deg, #151d32, #0c1222);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 50px 100px rgba(0,0,0,.5);
+      transform: perspective(1000px) rotateX(2deg);
+      transition: transform .6s var(--ease);
+    }
+    .mockup:hover { transform: perspective(1000px) rotateX(0deg); }
+    .mockup-bar { display: flex; gap: 8px; margin-bottom: 20px; }
+    .dot { width: 12px; height: 12px; border-radius: 50%; }
+    .dot-r { background: #ef4444; } .dot-y { background: #eab308; } .dot-g { background: #22c55e; }
+    .mockup-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 16px; }
+    .stat-cards { display: grid; gap: 12px; }
+    .stat-card {
+      background: rgba(0,0,0,.3);
+      border: 1px solid var(--border);
+      border-radius: 12px; padding: 18px;
+      transition: border-color .3s;
+    }
+    .stat-card:hover { border-color: rgba(79,110,247,.4); }
+    .stat-card h3 { font-size: 28px; font-weight: 800; color: var(--accent2); }
+    .stat-card p { font-size: 12px; color: var(--muted); margin-top: 4px; }
+    .chart-area {
+      background: rgba(0,0,0,.3);
+      border: 1px solid var(--border);
+      border-radius: 12px; padding: 20px;
+    }
+    .chart-title { font-size: 13px; color: var(--muted); margin-bottom: 16px; font-weight: 600; }
+    .chart-bars { display: flex; align-items: flex-end; gap: 10px; height: 120px; }
+    .bar {
+      flex: 1;
+      background: linear-gradient(180deg, var(--accent), rgba(79,110,247,.3));
+      border-radius: 6px 6px 0 0;
+      transform-origin: bottom;
+      animation: growBar 1.2s var(--ease) both;
+    }
+    @keyframes growBar {
+      from { transform: scaleY(0); }
+      to { transform: scaleY(1); }
+    }
+    .bar:nth-child(1) { height: 45%; animation-delay: .1s; }
+    .bar:nth-child(2) { height: 70%; animation-delay: .2s; }
+    .bar:nth-child(3) { height: 55%; animation-delay: .3s; }
+    .bar:nth-child(4) { height: 90%; animation-delay: .4s; }
+    .bar:nth-child(5) { height: 65%; animation-delay: .5s; }
+    .bar:nth-child(6) { height: 80%; animation-delay: .6s; }
+
+    .trust {
+      display: flex; justify-content: center; align-items: center;
+      gap: 40px; flex-wrap: wrap;
+      padding: 40px 32px;
+      opacity: .6;
+    }
+    .trust span { font-size: 15px; font-weight: 700; color: var(--muted); letter-spacing: .02em; }
+
+    .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .feature {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px; padding: 28px;
+      transition: transform .35s var(--ease), border-color .35s;
+    }
+    .feature:hover { transform: translateY(-6px); border-color: rgba(79,110,247,.3); }
+    .feature-icon {
+      width: 48px; height: 48px;
+      background: rgba(79,110,247,.15);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; margin-bottom: 18px;
+    }
+    .feature h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+    .feature p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+    .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .price-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px; padding: 32px 28px;
+      transition: transform .35s var(--ease);
+    }
+    .price-card:hover { transform: translateY(-8px); }
+    .price-card.hit { border-color: var(--accent); background: rgba(79,110,247,.08); }
+    .price-card h3 { font-size: 16px; font-weight: 700; color: var(--muted); }
+    .price-val { font-size: 40px; font-weight: 800; margin: 16px 0; }
+    .price-val small { font-size: 16px; color: var(--muted); font-weight: 600; }
+    .price-list li {
+      font-size: 13px; color: var(--muted);
+      padding: 10px 0; border-bottom: 1px solid var(--border);
+      display: flex; gap: 8px;
+    }
+    .price-list li::before { content: '✓'; color: var(--green); font-weight: 700; }
+
+    .faq-item { background: var(--surface); border: 1px solid var(--border); }
+    .faq-q { color: var(--text); }
+    .faq-a { color: var(--muted); }
+
+    .cta-banner {
+      margin: 0 32px 60px;
+      max-width: 1100px;
+      margin-left: auto; margin-right: auto;
+      background: linear-gradient(135deg, var(--accent), #3730a3);
+      border-radius: 24px;
+      padding: 48px 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-banner::before {
+      content: '';
+      position: absolute;
+      width: 300px; height: 300px;
+      background: rgba(255,255,255,.1);
+      border-radius: 50%;
+      top: -100px; right: -50px;
+    }
+    .cta-banner h2 { font-size: 28px; font-weight: 800; margin-bottom: 12px; position: relative; }
+    .cta-banner p { opacity: .85; margin-bottom: 24px; position: relative; }
+    .cta-banner .btn { background: #fff; color: var(--accent); position: relative; }
+
+    .footer-bottom { color: #475569; text-align: center; padding: 24px; border-top: 1px solid var(--border); }
+
+    @media (max-width: 900px) {
+      .mockup-grid { grid-template-columns: 1fr; }
+      .features-grid, .pricing-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .hero { padding: 40px 20px 30px; }
+      .nav { padding: 16px 20px; }
+      .cta-banner { margin: 0 20px 40px; padding: 36px 24px; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="logo">Cloud<span>Flow</span></div>
+    <ul class="nav-links">
+      <li><a href="#features">Возможности</a></li>
+      <li><a href="#pricing">Тарифы</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <button class="btn btn-primary nav-cta-desktop">Попробовать бесплатно</button>
+    <button class="burger" aria-label="Меню"><span></span><span></span><span></span></button>
+  </nav>
+  <div class="mobile-menu">
+    <div class="mobile-menu-panel">
+      <a href="#features">Возможности</a>
+      <a href="#pricing">Тарифы</a>
+      <a href="#faq">FAQ</a>
+      <button class="btn btn-primary nav-cta-desktop" data-close style="margin-top:20px;width:100%">Попробовать бесплатно</button>
+    </div>
+  </div>
+
+  <section class="hero">
+    <div class="badge reveal">🚀 Версия 2.0 — аналитика в реальном времени</div>
+    <h1 class="reveal">Управляйте проектами <span>в одном месте</span></h1>
+    <p class="reveal">Облачная платформа для команд: задачи, CRM, отчёты и автоматизация. Как Битрикс24, но проще и быстрее.</p>
+    <div class="hero-btns reveal btn-row">
+      <button class="btn btn-primary">Начать бесплатно — 14 дней</button>
+      <button class="btn btn-outline">Смотреть демо</button>
+    </div>
+    <div class="mockup reveal-scale">
+      <div class="mockup-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+      <div class="mockup-grid">
+        <div class="stat-cards">
+          <div class="stat-card"><h3 data-count="847">0</h3><p>Активных задач</p></div>
+          <div class="stat-card"><h3 data-count="98" data-suffix="%">0</h3><p>Выполнено в срок</p></div>
+          <div class="stat-card"><h3 data-count="24">0</h3><p>Участников команды</p></div>
+        </div>
+        <div class="chart-area">
+          <div class="chart-title">Выручка за неделю, тыс. ₽</div>
+          <div class="chart-bars">
+            <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+            <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="trust reveal">
+    <span>СБЕР</span><span>ЯНДЕКС</span><span>ТИНЬКОФФ</span><span>АВИТО</span><span>VK</span>
+  </div>
+
+  <section class="section" id="features">
+    <div class="section-inner">
+      <span class="section-tag reveal" style="color:var(--accent2)">Возможности</span>
+      <h2 class="section-title reveal">Всё для продуктивной команды</h2>
+      <div class="features-grid" style="margin-top:40px">
+        <div class="feature reveal"><div class="feature-icon">⚡</div><h3>Быстрый старт</h3><p>Настройка за 5 минут. Импорт из Excel, Trello, Notion.</p></div>
+        <div class="feature reveal" data-delay="100"><div class="feature-icon">📊</div><h3>Аналитика</h3><p>Дашборды, отчёты PDF, экспорт в 1С. Данные в реальном времени.</p></div>
+        <div class="feature reveal" data-delay="200"><div class="feature-icon">🔒</div><h3>Безопасность</h3><p>Шифрование, 2FA, серверы в РФ. Соответствие 152-ФЗ.</p></div>
+        <div class="feature reveal"><div class="feature-icon">🤝</div><h3>CRM встроен</h3><p>Воронка продаж, сделки, напоминания — без доплат.</p></div>
+        <div class="feature reveal" data-delay="100"><div class="feature-icon">📱</div><h3>Мобильное приложение</h3><p>iOS и Android. Push-уведомления о дедлайнах.</p></div>
+        <div class="feature reveal" data-delay="200"><div class="feature-icon">🔗</div><h3>Интеграции</h3><p>Telegram, Slack, Google Calendar, amoCRM.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="pricing" style="background:rgba(255,255,255,.02)">
+    <div class="section-inner" style="text-align:center">
+      <span class="section-tag reveal" style="color:var(--accent2)">Тарифы</span>
+      <h2 class="section-title reveal">Выберите план</h2>
+      <div class="pricing-grid" style="margin-top:40px;text-align:left">
+        <div class="price-card reveal">
+          <h3>Старт</h3>
+          <div class="price-val">0 <small>₽/мес</small></div>
+          <ul class="price-list">
+            <li>До 3 пользователей</li>
+            <li>10 проектов</li>
+            <li>Базовая аналитика</li>
+          </ul>
+          <button class="btn btn-outline" style="width:100%">Начать</button>
+        </div>
+        <div class="price-card hit reveal" data-delay="100">
+          <h3>Бизнес</h3>
+          <div class="price-val">1 990 <small>₽/мес</small></div>
+          <ul class="price-list">
+            <li>До 25 пользователей</li>
+            <li>Безлимит проектов</li>
+            <li>CRM + интеграции</li>
+          </ul>
+          <button class="btn btn-primary" style="width:100%">Попробовать 14 дней</button>
+        </div>
+        <div class="price-card reveal" data-delay="200">
+          <h3>Корпорация</h3>
+          <div class="price-val">4 990 <small>₽/мес</small></div>
+          <ul class="price-list">
+            <li>Безлимит пользователей</li>
+            <li>SSO, API, SLA 99.9%</li>
+            <li>Персональный менеджер</li>
+          </ul>
+          <button class="btn btn-outline" style="width:100%">Связаться</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="faq">
+    <div class="section-inner" style="max-width:700px">
+      <span class="section-tag reveal" style="color:var(--accent2)">FAQ</span>
+      <h2 class="section-title reveal">Вопросы и ответы</h2>
+      <div class="faq" style="margin-top:32px">
+        <div class="faq-item reveal"><button class="faq-q">Есть ли бесплатный период?<span class="icon">+</span></button><div class="faq-a">Да, 14 дней на тарифе «Бизнес» без привязки карты.</div></div>
+        <div class="faq-item reveal"><button class="faq-q">Где хранятся данные?<span class="icon">+</span></button><div class="faq-a">На серверах в России. Резервное копирование каждые 6 часов.</div></div>
+        <div class="faq-item reveal"><button class="faq-q">Можно перенести из Excel?<span class="icon">+</span></button><div class="faq-a">Да, импорт за 2 минуты. Поможем с миграцией бесплатно.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-banner reveal">
+    <h2>Готовы навести порядок в проектах?</h2>
+    <p>Присоединяйтесь к 12 000+ команд в России</p>
+    <button class="btn">Создать аккаунт бесплатно</button>
+  </div>
+
+  <footer class="footer-bottom">Учебный проект · SaaS Landing · HTML/CSS/JS · 2026</footer>
+  <script src="shared.js"></script>
+</body>
+</html>

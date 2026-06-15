@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ReactFlow — Интерактивный лендинг</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="shared.css" />
+  <style>
+    :root {
+      --bg: #0a0e17;
+      --surface: #111827;
+      --border: rgba(255,255,255,.08);
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --accent: #ff6b2b;
+      --accent2: #ff9f43;
+      --green: #22c55e;
+    }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 32px;
+      background: transparent;
+    }
+    .nav.scrolled { background: rgba(10,14,23,.88); }
+    .burger span { background: var(--text); }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 18px;
+    }
+    .logo-icon {
+      width: 38px; height: 38px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      animation: logoPulse 3s ease infinite;
+    }
+    @keyframes logoPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(255,107,43,.4); }
+      50% { box-shadow: 0 0 0 10px rgba(255,107,43,0); }
+    }
+    .nav-links { display: flex; gap: 28px; }
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--muted);
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), #e85d04);
+      color: #fff;
+      box-shadow: 0 8px 28px rgba(255,107,43,.3);
+    }
+    .btn-ghost {
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .mobile-menu-panel { background: #111827; }
+    .mobile-menu-panel a { color: var(--text); }
+
+    .hero-wrap {
+      position: relative;
+      padding: 40px 32px 80px;
+      max-width: 1160px;
+      margin: 0 auto;
+    }
+    .hero-glow {
+      position: absolute;
+      top: -80px; right: -100px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(255,107,43,.15), transparent 70%);
+      pointer-events: none;
+      animation: glowMove 8s ease infinite;
+    }
+    @keyframes glowMove {
+      0%, 100% { transform: translate(0,0); }
+      50% { transform: translate(-30px, 20px); }
+    }
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+      position: relative;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,107,43,.12);
+      border: 1px solid rgba(255,107,43,.25);
+      color: var(--accent2);
+      padding: 7px 14px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 22px;
+    }
+    .badge-dot {
+      width: 7px; height: 7px;
+      background: var(--green);
+      border-radius: 50%;
+      animation: blink 1.5s ease infinite;
+    }
+    @keyframes blink { 50% { opacity: .3; } }
+    h1 {
+      font-size: clamp(32px, 4.5vw, 46px);
+      font-weight: 800;
+      line-height: 1.12;
+      letter-spacing: -.03em;
+      margin-bottom: 18px;
+    }
+    h1 .grad {
+      background: linear-gradient(135deg, var(--accent), var(--accent2), #ffd166);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmer 4s linear infinite;
+    }
+    @keyframes shimmer {
+      0% { background-position: 0% center; }
+      100% { background-position: 200% center; }
+    }
+    .hero p {
+      font-size: 16px;
+      color: var(--muted);
+      line-height: 1.75;
+      margin-bottom: 28px;
+    }
+    .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 32px; }
+
+    /* Live demos grid */
+    .demos { display: grid; gap: 14px; }
+    .demo-card {
+      background: rgba(255,255,255,.04);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      transition: border-color .3s, transform .3s var(--ease);
+    }
+    .demo-card:hover { border-color: rgba(255,107,43,.3); }
+    .demo-card h4 {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 600;
+      margin-bottom: 14px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .counter-row { display: flex; align-items: center; gap: 14px; }
+    .counter-val {
+      font-size: 42px;
+      font-weight: 800;
+      color: var(--accent);
+      min-width: 70px;
+      transition: transform .2s var(--ease);
+    }
+    .counter-val.bump { transform: scale(1.15); }
+    .counter-btns { display: flex; gap: 8px; }
+    .counter-btns button {
+      width: 42px; height: 42px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.05);
+      color: var(--text);
+      font-size: 20px;
+      transition: background .2s, border-color .2s;
+    }
+    .counter-btns button:hover {
+      background: rgba(255,107,43,.15);
+      border-color: var(--accent);
+    }
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .toggle {
+      width: 52px; height: 28px;
+      background: #334155;
+      border-radius: 100px;
+      position: relative;
+      border: none;
+      transition: background .3s;
+    }
+    .toggle.on { background: var(--accent); }
+    .toggle::after {
+      content: '';
+      position: absolute;
+      top: 3px; left: 3px;
+      width: 22px; height: 22px;
+      background: #fff;
+      border-radius: 50%;
+      transition: transform .3s var(--ease);
+    }
+    .toggle.on::after { transform: translateX(24px); }
+    .form-demo input {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,.3);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 14px;
+      outline: none;
+      transition: border-color .2s;
+    }
+    .form-demo input:focus { border-color: var(--accent); }
+    .form-demo input.invalid { border-color: #ef4444; animation: shake .4s; }
+    .form-demo input.valid { border-color: var(--green); }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      75% { transform: translateX(6px); }
+    }
+    .form-msg { font-size: 12px; margin-top: 8px; min-height: 18px; }
+    .form-msg.err { color: #f87171; }
+    .form-msg.ok { color: var(--green); }
+
+    /* Panel */
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 40px 80px rgba(0,0,0,.45);
+      position: relative;
+      overflow: hidden;
+    }
+    .panel::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent));
+      background-size: 200% 100%;
+      animation: barSlide 3s linear infinite;
+    }
+    @keyframes barSlide {
+      0% { background-position: 0% 0; }
+      100% { background-position: 200% 0; }
+    }
+    .panel-tabs {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .tab {
+      padding: 9px 16px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      transition: background .25s, color .25s;
+    }
+    .tab.active {
+      background: rgba(255,107,43,.15);
+      color: var(--accent2);
+    }
+    .component {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 14px;
+      background: rgba(255,255,255,.03);
+      border-radius: 10px;
+      font-size: 14px;
+      margin-bottom: 8px;
+      transform: translateX(0);
+      transition: transform .3s var(--ease), background .3s;
+    }
+    .component:hover { transform: translateX(6px); background: rgba(255,107,43,.06); }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
+
+    /* Marquee */
+    .marquee-wrap {
+      overflow: hidden;
+      padding: 24px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    }
+    .marquee {
+      display: flex;
+      gap: 48px;
+      width: max-content;
+      animation: marquee 25s linear infinite;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+    .marquee span {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .marquee span b { color: var(--accent2); }
+
+    /* Features */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .feat {
+      background: rgba(255,255,255,.03);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px 24px;
+      transition: transform .35s var(--ease), border-color .35s;
+    }
+    .feat:hover {
+      transform: translateY(-6px);
+      border-color: rgba(255,107,43,.25);
+    }
+    .feat-icon { font-size: 32px; margin-bottom: 16px; }
+    .feat h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+    .feat p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+    /* Process */
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    .step {
+      text-align: center;
+      padding: 28px 16px;
+      background: rgba(255,255,255,.03);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      position: relative;
+    }
+    .step-num {
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 14px;
+      margin: 0 auto 14px;
+      color: #fff;
+    }
+    .step h4 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+    .step p { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+    /* Pricing */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      align-items: start;
+    }
+    .price-card {
+      background: rgba(255,255,255,.03);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px 28px;
+      transition: transform .35s var(--ease), border-color .35s;
+    }
+    .price-card:hover { transform: translateY(-8px); }
+    .price-card.popular {
+      border-color: var(--accent);
+      background: rgba(255,107,43,.06);
+      transform: scale(1.03);
+    }
+    .price-card.popular:hover { transform: scale(1.03) translateY(-8px); }
+    .popular-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .price-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+    .price-val {
+      font-size: 36px;
+      font-weight: 800;
+      margin: 16px 0;
+      letter-spacing: -.02em;
+    }
+    .price-val span { font-size: 16px; font-weight: 600; color: var(--muted); }
+    .price-list { margin: 20px 0; }
+    .price-list li {
+      font-size: 13px;
+      color: var(--muted);
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .price-list li::before { content: '✓'; color: var(--green); font-weight: 700; }
+
+    /* Testimonials */
+    .testimonial-slider {
+      position: relative;
+      max-width: 640px;
+      margin: 0 auto;
+      text-align: center;
+      min-height: 160px;
+    }
+    .testimonial {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity .5s var(--ease), transform .5s var(--ease);
+    }
+    .testimonial.active {
+      opacity: 1;
+      transform: translateY(0);
+      position: relative;
+    }
+    .testimonial p {
+      font-size: 18px;
+      line-height: 1.7;
+      font-style: italic;
+      margin-bottom: 20px;
+      color: var(--muted);
+    }
+    .testimonial-author { font-weight: 700; font-size: 14px; }
+    .testimonial-role { font-size: 13px; color: var(--muted); }
+    .slider-dots { display: flex; justify-content: center; gap: 8px; margin-top: 24px; }
+    .slider-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      border: none;
+      background: #334155;
+      transition: background .3s, transform .3s;
+    }
+    .slider-dot.active { background: var(--accent); transform: scale(1.3); }
+
+    /* FAQ dark */
+    .faq-item { background: rgba(255,255,255,.03); border: 1px solid var(--border); }
+    .faq-q { color: var(--text); }
+    .faq-a { color: var(--muted); }
+
+    /* CTA */
+    .cta {
+      text-align: center;
+      padding: 72px 32px;
+      background: linear-gradient(135deg, rgba(255,107,43,.1), rgba(255,159,67,.05));
+      border-top: 1px solid rgba(255,107,43,.2);
+      border-bottom: 1px solid rgba(255,107,43,.2);
+    }
+    .cta h2 { font-size: clamp(24px, 4vw, 32px); font-weight: 800; margin-bottom: 12px; }
+    .cta p { color: var(--muted); margin-bottom: 28px; font-size: 16px; }
+
+    /* Footer */
+    .footer-grid { color: var(--muted); }
+    .footer-grid h4 { color: var(--text); font-size: 14px; margin-bottom: 16px; }
+    .footer-grid a {
+      display: block;
+      font-size: 14px;
+      padding: 6px 0;
+      color: var(--muted);
+      transition: color .2s;
+    }
+    .footer-grid a:hover { color: var(--accent2); }
+    .footer-bottom { color: #475569; background: rgba(0,0,0,.3); }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.7);
+      backdrop-filter: blur(6px);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .35s, visibility .35s;
+    }
+    .modal-overlay.open { opacity: 1; visibility: visible; }
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 36px;
+      max-width: 420px;
+      width: 100%;
+      transform: scale(.9) translateY(20px);
+      transition: transform .4s var(--ease);
+    }
+    .modal-overlay.open .modal { transform: scale(1) translateY(0); }
+    .modal h3 { font-size: 22px; font-weight: 800; margin-bottom: 12px; }
+    .modal p { color: var(--muted); font-size: 14px; line-height: 1.6; margin-bottom: 24px; }
+    .modal-close {
+      position: absolute;
+      top: 16px; right: 16px;
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 24px;
+    }
+
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; }
+      .features-grid, .pricing-grid { grid-template-columns: 1fr; }
+      .process-grid { grid-template-columns: repeat(2, 1fr); }
+      .price-card.popular { transform: none; }
+    }
+    @media (max-width: 600px) {
+      .hero-wrap { padding: 24px 20px 60px; }
+      .nav { padding: 16px 20px; }
+      .process-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="logo"><div class="logo-icon">⚛</div> ReactFlow</div>
+    <ul class="nav-links">
+      <li><a href="#demos">Демо</a></li>
+      <li><a href="#process">Процесс</a></li>
+      <li><a href="#pricing">Цены</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <button class="btn btn-primary nav-cta-desktop" id="openModal">Заказать</button>
+    <button class="burger" aria-label="Меню"><span></span><span></span><span></span></button>
+  </nav>
+
+  <div class="mobile-menu">
+    <div class="mobile-menu-panel">
+      <a href="#demos">Демо</a>
+      <a href="#process">Процесс</a>
+      <a href="#pricing">Цены</a>
+      <a href="#faq">FAQ</a>
+      <button class="btn btn-primary" id="openModalMobile" data-close style="margin-top:20px;border-radius:12px;">Заказать разработку</button>
+    </div>
+  </div>
+
+  <div class="hero-wrap">
+    <div class="hero-glow"></div>
+    <section class="hero">
+      <div class="reveal">
+        <div class="badge"><span class="badge-dot"></span> React · JavaScript · UI</div>
+        <h1>Интерактивные <span class="grad">React-интерфейсы</span> для бизнеса</h1>
+        <p>Лендинги, личные кабинеты, формы и SPA — с анимациями, адаптивом и чистым кодом. Как на Тинькофф, только под ваш продукт.</p>
+        <div class="hero-btns btn-row">
+          <button class="btn btn-primary" id="openModal2">Обсудить проект</button>
+          <a href="#demos" class="btn btn-ghost">Смотреть демо ↓</a>
+        </div>
+        <div class="demos" id="demos">
+          <div class="demo-card reveal" data-delay="100">
+            <h4>// useState — счётчик</h4>
+            <div class="counter-row">
+              <span class="counter-val" id="count">0</span>
+              <div class="counter-btns">
+                <button id="minus" aria-label="Минус">−</button>
+                <button id="plus" aria-label="Плюс">+</button>
+              </div>
+            </div>
+          </div>
+          <div class="demo-card reveal" data-delay="200">
+            <h4>// useState — переключатель</h4>
+            <div class="toggle-row">
+              <span id="toggleLabel">Уведомления выкл.</span>
+              <button class="toggle" id="toggle" aria-label="Переключить"></button>
+            </div>
+          </div>
+          <div class="demo-card reveal form-demo" data-delay="300">
+            <h4>// валидация формы</h4>
+            <input type="email" id="emailInput" placeholder="your@email.ru" />
+            <div class="form-msg" id="formMsg"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel reveal-right" data-tabs>
+        <div class="panel-tabs">
+          <button class="tab active" data-tab="ui">UI</button>
+          <button class="tab" data-tab="logic">Логика</button>
+          <button class="tab" data-tab="api">API</button>
+        </div>
+        <div class="tab-panel active" data-panel="ui">
+          <div class="component"><span class="dot"></span> Кнопки, формы, модалки</div>
+          <div class="component"><span class="dot"></span> Табы и аккордеоны</div>
+          <div class="component"><span class="dot"></span> Анимации и переходы</div>
+          <div class="component"><span class="dot"></span> Адаптивная сетка</div>
+        </div>
+        <div class="tab-panel" data-panel="logic">
+          <div class="component"><span class="dot"></span> Фильтрация и поиск</div>
+          <div class="component"><span class="dot"></span> Корзина и состояние</div>
+          <div class="component"><span class="dot"></span> Валидация в реальном времени</div>
+        </div>
+        <div class="tab-panel" data-panel="api">
+          <div class="component"><span class="dot"></span> REST API интеграция</div>
+          <div class="component"><span class="dot"></span> Загрузка и кэш данных</div>
+          <div class="component"><span class="dot"></span> Обработка ошибок</div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="marquee-wrap">
+    <div class="marquee">
+      <span><b>React</b> 18</span><span><b>Next.js</b></span><span><b>TypeScript</b></span><span><b>Tailwind</b></span><span><b>REST API</b></span><span><b>WordPress</b></span><span><b>Figma</b></span><span><b>Core Web Vitals</b></span>
+      <span><b>React</b> 18</span><span><b>Next.js</b></span><span><b>TypeScript</b></span><span><b>Tailwind</b></span><span><b>REST API</b></span><span><b>WordPress</b></span><span><b>Figma</b></span><span><b>Core Web Vitals</b></span>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="section-inner">
+      <span class="section-tag reveal" style="color:var(--accent2)">Возможности</span>
+      <h2 class="section-title reveal">Почему React, а не просто HTML</h2>
+      <div class="features-grid" style="margin-top:40px">
+        <div class="feat reveal"><div class="feat-icon">⚡</div><h3>Мгновенный отклик</h3><p>Кнопки, формы и фильтры работают без перезагрузки — как в мобильном приложении.</p></div>
+        <div class="feat reveal" data-delay="100"><div class="feat-icon">📱</div><h3>Mobile-first</h3><p>Адаптив с 320px: бургер-меню, touch-friendly элементы, оптимизация под Android и iOS.</p></div>
+        <div class="feat reveal" data-delay="200"><div class="feat-icon">🧩</div><h3>Масштабируемость</h3><p>Компонентная архитектура: легко добавлять страницы, блоки и интеграции.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="process" style="background:rgba(255,255,255,.02)">
+    <div class="section-inner" style="text-align:center">
+      <span class="section-tag reveal" style="color:var(--accent2)">Процесс</span>
+      <h2 class="section-title reveal" style="margin:0 auto 40px">Как я работаю</h2>
+      <div class="process-grid">
+        <div class="step reveal"><div class="step-num">1</div><h4>Бриф</h4><p>Обсуждаем задачу, референсы и сроки</p></div>
+        <div class="step reveal" data-delay="80"><div class="step-num">2</div><h4>Макет</h4><p>Вёрстка ключевых экранов и согласование</p></div>
+        <div class="step reveal" data-delay="160"><div class="step-num">3</div><h4>Разработка</h4><p>React-компоненты, анимации, адаптив</p></div>
+        <div class="step reveal" data-delay="240"><div class="step-num">4</div><h4>Сдача</h4><p>Тестирование, код, инструкция</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="pricing">
+    <div class="section-inner" style="text-align:center">
+      <span class="section-tag reveal" style="color:var(--accent2)">Тарифы</span>
+      <h2 class="section-title reveal">Прозрачные цены</h2>
+      <p class="section-desc reveal" style="margin:0 auto 40px;color:var(--muted)">Ориентиры для Kwork. Точная стоимость — после уточнения ТЗ.</p>
+      <div class="pricing-grid">
+        <div class="price-card reveal">
+          <h3>Лендинг</h3>
+          <div class="price-val">от 5 000 <span>₽</span></div>
+          <ul class="price-list">
+            <li>1 страница, адаптив</li>
+            <li>Анимации и форма</li>
+            <li>Срок 3–5 дней</li>
+          </ul>
+          <button class="btn btn-ghost" style="width:100%">Выбрать</button>
+        </div>
+        <div class="price-card popular reveal" data-delay="100">
+          <span class="popular-badge">Популярный</span>
+          <h3>React-интерфейс</h3>
+          <div class="price-val">от 12 000 <span>₽</span></div>
+          <ul class="price-list">
+            <li>Интерактив, состояние</li>
+            <li>API-интеграция</li>
+            <li>Срок 5–10 дней</li>
+          </ul>
+          <button class="btn btn-primary" style="width:100%">Выбрать</button>
+        </div>
+        <div class="price-card reveal" data-delay="200">
+          <h3>Доработка CMS</h3>
+          <div class="price-val">от 2 500 <span>₽</span></div>
+          <ul class="price-list">
+            <li>WP / Tilda / Bitrix</li>
+            <li>Блоки, формы, правки</li>
+            <li>Срок 1–3 дня</li>
+          </ul>
+          <button class="btn btn-ghost" style="width:100%">Выбрать</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background:rgba(255,255,255,.02)">
+    <div class="section-inner">
+      <div class="testimonial-slider reveal" id="testimonials">
+        <div class="testimonial active">
+          <p>«Нужен был лендинг с живой формой записи — сделали за неделю, всё работает на телефоне.»</p>
+          <div class="testimonial-author">Анна К.</div>
+          <div class="testimonial-role">Салон красоты, Москва</div>
+        </div>
+        <div class="testimonial">
+          <p>«Доработали блок на Tilda — добавили фильтр каталога без перезагрузки. Клиенты довольны.»</p>
+          <div class="testimonial-author">Дмитрий В.</div>
+          <div class="testimonial-role">Интернет-магазин</div>
+        </div>
+        <div class="testimonial">
+          <p>«React-дашборд для внутренней аналитики — чистый код, понятная документация.»</p>
+          <div class="testimonial-author">Олег М.</div>
+          <div class="testimonial-role">IT-стартап</div>
+        </div>
+      </div>
+      <div class="slider-dots" id="sliderDots"></div>
+    </div>
+  </section>
+
+  <section class="section" id="faq">
+    <div class="section-inner" style="max-width:720px">
+      <span class="section-tag reveal" style="color:var(--accent2)">FAQ</span>
+      <h2 class="section-title reveal">Частые вопросы</h2>
+      <div class="faq" style="margin-top:32px">
+        <div class="faq-item reveal"><button class="faq-q">Сколько времени займёт лендинг?<span class="icon">+</span></button><div class="faq-a">Простой лендинг — 3–5 дней. Сложный React-интерфейс — от 7 дней. Точный срок после брифа.</div></div>
+        <div class="faq-item reveal"><button class="faq-q">Работаете с WordPress и Tilda?<span class="icon">+</span></button><div class="faq-a">Да. Дорабатываю шаблоны WP, Zero Block на Tilda, модули Битрикс. React подключаю отдельными блоками.</div></div>
+        <div class="faq-item reveal"><button class="faq-q">Отдаёте исходный код?<span class="icon">+</span></button><div class="faq-a">Да, по завершении — HTML/CSS/JS или React-компоненты и краткая инструкция по деплою.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta reveal">
+    <h2>Нужен сайт или интерфейс на React?</h2>
+    <p>Напишите на Kwork — обсудим задачу бесплатно</p>
+    <button class="btn btn-primary" id="openModal3">Написать в Kwork</button>
+  </section>
+
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="logo" style="margin-bottom:16px"><div class="logo-icon">⚛</div> ReactFlow</div>
+        <p style="font-size:14px;line-height:1.7">Frontend и React-разработка для малого бизнеса и стартапов.</p>
+      </div>
+      <div><h4>Услуги</h4><a href="#">Лендинги</a><a href="#">React SPA</a><a href="#">Доработка CMS</a></div>
+      <div><h4>Контакты</h4><a href="#">Kwork</a><a href="#">Telegram</a><a href="#">Email</a></div>
+    </div>
+    <div class="footer-bottom">Учебный проект · Frontend + React · 2026</div>
+  </footer>
+
+  <div class="modal-overlay" id="modal">
+    <div class="modal" style="position:relative">
+      <button class="modal-close" id="closeModal">×</button>
+      <h3>Обсудим проект?</h3>
+      <p>Опишите задачу на Kwork — отвечу в течение 24 часов с оценкой сроков и стоимости.</p>
+      <button class="btn btn-primary" style="width:100%" data-close>Понятно, спасибо!</button>
+    </div>
+  </div>
+
+  <script src="shared.js"></script>
+  <script>
+    // Counter
+    let count = 0;
+    const countEl = document.getElementById('count');
+    const bump = () => { countEl.classList.add('bump'); setTimeout(() => countEl.classList.remove('bump'), 200); };
+    document.getElementById('plus').onclick = () => { count++; countEl.textContent = count; bump(); };
+    document.getElementById('minus').onclick = () => { count--; countEl.textContent = count; bump(); };
+
+    // Toggle
+    const toggle = document.getElementById('toggle');
+    const toggleLabel = document.getElementById('toggleLabel');
+    toggle.onclick = () => {
+      toggle.classList.toggle('on');
+      toggleLabel.textContent = toggle.classList.contains('on') ? 'Уведомления вкл. ✓' : 'Уведомления выкл.';
+    };
+
+    // Email validation
+    const emailInput = document.getElementById('emailInput');
+    const formMsg = document.getElementById('formMsg');
+    emailInput.addEventListener('input', () => {
+      const v = emailInput.value.trim();
+      const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+      emailInput.classList.toggle('valid', ok && v.length > 0);
+      emailInput.classList.toggle('invalid', v.length > 0 && !ok);
+      if (!v) { formMsg.textContent = ''; formMsg.className = 'form-msg'; }
+      else if (ok) { formMsg.textContent = '✓ Email корректный'; formMsg.className = 'form-msg ok'; }
+      else { formMsg.textContent = 'Введите корректный email'; formMsg.className = 'form-msg err'; }
+    });
+
+    // Modal
+    const modal = document.getElementById('modal');
+    const openModal = () => modal.classList.add('open');
+    const closeModal = () => modal.classList.remove('open');
+    ['openModal', 'openModal2', 'openModal3', 'openModalMobile'].forEach(id => {
+      document.getElementById(id)?.addEventListener('click', openModal);
+    });
+    document.getElementById('closeModal').onclick = closeModal;
+    modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+
+    // Testimonial slider
+    const slides = document.querySelectorAll('.testimonial');
+    const dotsWrap = document.getElementById('sliderDots');
+    let slideIdx = 0;
+    slides.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.className = 'slider-dot' + (i === 0 ? ' active' : '');
+      dot.onclick = () => goSlide(i);
+      dotsWrap.appendChild(dot);
+    });
+    function goSlide(i) {
+      slides[slideIdx].classList.remove('active');
+      dotsWrap.children[slideIdx].classList.remove('active');
+      slideIdx = i;
+      slides[slideIdx].classList.add('active');
+      dotsWrap.children[slideIdx].classList.add('active');
+    }
+    setInterval(() => goSlide((slideIdx + 1) % slides.length), 5000);
+  </script>
+</body>
+</html>

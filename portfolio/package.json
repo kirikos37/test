@@ -1,0 +1,9 @@
+{
+  "name": "portfolio",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "export": "node export-screenshots.mjs",
+    "preview": "node preview.mjs"
+  }
+}
