@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "export": "node export-screenshots.mjs",
+    "export:gifs": "node export-project-gifs.mjs",
     "preview": "node preview.mjs"
   }
 }
