@@ -692,6 +692,53 @@
       gap: 16px;
     }
     footer p { font-size: 13px; color: var(--muted); }
+    /* Back to top */
+    .back-to-top {
+      position: fixed;
+      right: 24px;
+      bottom: 28px;
+      z-index: 90;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: rgba(3, 3, 8, .75);
+      backdrop-filter: blur(12px);
+      color: var(--text);
+      cursor: none;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, .35);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(16px) scale(.92);
+      transition: opacity .35s var(--ease), transform .35s var(--ease), visibility .35s,
+                  border-color .25s, box-shadow .25s, color .25s;
+    }
+    .back-to-top svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      stroke-width: 2.2;
+      fill: none;
+      transition: transform .25s var(--ease);
+    }
+    .back-to-top:hover {
+      border-color: rgba(245, 158, 11, .45);
+      color: var(--amber);
+      box-shadow: 0 12px 40px rgba(245, 158, 11, .18);
+    }
+    .back-to-top:hover svg { transform: translateY(-2px); }
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+    }
+    @media (max-width: 768px) {
+      .back-to-top { right: 18px; bottom: 22px; cursor: pointer; }
+    }
+
     .footer-note {
       font-family: 'JetBrains Mono', monospace;
       font-size: 11px;
@@ -1017,6 +1064,10 @@
     </footer>
   </div>
 
+  <button type="button" class="back-to-top" id="backToTop" aria-label="Наверх">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5l-7 7M12 5l7 7M12 5v14" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+
   <script>
     // Stars canvas
     const canvas = document.getElementById('stars');
@@ -1083,11 +1134,16 @@
       });
     });
 
-    // Scroll progress
+    // Scroll progress + back to top
     const progress = document.getElementById('scrollProgress');
+    const backToTop = document.getElementById('backToTop');
     window.addEventListener('scroll', () => {
       const h = document.documentElement.scrollHeight - window.innerHeight;
       progress.style.width = (window.scrollY / h * 100) + '%';
+      backToTop?.classList.toggle('visible', window.scrollY > 420);
+    }, { passive: true });
+    backToTop?.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
     // Reveal on scroll

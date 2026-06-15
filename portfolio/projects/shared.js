@@ -96,6 +96,23 @@
     });
   });
 
+  // Back to top
+  let backToTop = document.querySelector('.back-to-top');
+  if (!backToTop) {
+    backToTop = document.createElement('button');
+    backToTop.type = 'button';
+    backToTop.className = 'back-to-top';
+    backToTop.setAttribute('aria-label', 'Наверх');
+    backToTop.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5l-7 7M12 5l7 7M12 5v14" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    document.body.appendChild(backToTop);
+  }
+  window.addEventListener('scroll', () => {
+    backToTop.classList.toggle('visible', window.scrollY > 380);
+  }, { passive: true });
+  backToTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
   // Smooth anchor scroll
   document.querySelectorAll('a[href^="#"]').forEach((a) => {
     a.addEventListener('click', (e) => {
