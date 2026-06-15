@@ -96,6 +96,14 @@
     });
   });
 
+  // Back to portfolio — надёжная ссылка на главную
+  document.querySelectorAll('.back-home').forEach((link) => {
+    link.href = new URL('../index.html', window.location.href).href;
+    link.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+  });
+
   // Back to top
   let backToTop = document.querySelector('.back-to-top');
   if (!backToTop) {
