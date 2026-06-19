@@ -26,6 +26,9 @@ Thumbs.db
 # Private notes — not for public repo
 README.md
 **/README.md
+docs/
+kwork-cover/
+portfolio/KWORK-*.md
 
 # Cursor keeps some .vscode files; ignore local overrides
 .vscode/*
