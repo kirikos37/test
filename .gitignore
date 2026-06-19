@@ -23,6 +23,10 @@ Thumbs.db
 .idea/
 *.sw?
 
+# Private notes — not for public repo
+README.md
+**/README.md
+
 # Cursor keeps some .vscode files; ignore local overrides
 .vscode/*
 !.vscode/tasks.json
