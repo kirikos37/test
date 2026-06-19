@@ -27,6 +27,7 @@ const projects = [
   { file: '09-mobile-nav.html', gif: '09-mobile-nav.gif' },
   { file: '10-form-responsive.html', gif: '10-form-responsive.gif' },
   { file: '11-table-adaptive.html', gif: '11-table-adaptive.gif' },
+  { file: '12-cap-pc.html', gif: '12-cap-pc.gif' },
 ];
 
 function findBrowser() {

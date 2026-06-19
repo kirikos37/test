@@ -1,0 +1,443 @@
+{
+  "items": [
+    {
+      "name": "Intel Core i5-14400F",
+      "query": "Intel Core i5-14400F",
+      "keywords": ["i5-14400f", "i5 14400", "14400f", "intel i5"],
+      "category": "cpu",
+      "shops": [
+        { "name": "DNS", "price": 18990, "url": "https://www.dns-shop.ru/", "city": "Иваново" },
+        { "name": "Ситилинк", "price": 19299, "url": "https://www.citilink.ru/", "city": "Иваново" },
+        { "name": "Ozon", "price": 18750, "url": "https://www.ozon.ru/", "city": "Москва" },
+        { "name": "Wildberries", "price": 19100, "url": "https://www.wildberries.ru/", "city": "Иваново" },
+        { "name": "Regard", "price": 18890, "url": "https://www.regard.ru/", "city": "Москва" }
+      ],
+      "history": [
+        { "date": "2026-01", "price": 19500 },
+        { "date": "2026-02", "price": 19200 },
+        { "date": "2026-03", "price": 19000 },
+        { "date": "2026-04", "price": 18900 },
+        { "date": "2026-05", "price": 18750 }
+      ]
+    },
+    {
+      "name": "Intel Core i7-14700K",
+      "query": "Intel Core i7-14700K",
+      "keywords": ["i7-14700k", "i7 14700", "14700k", "intel i7"],
+      "category": "cpu",
+      "shops": [
+        { "name": "DNS", "price": 32990, "url": "https://www.dns-shop.ru/", "city": "Иваново" },
+        { "name": "Ситилинк", "price": 33490, "url": "https://www.citilink.ru/", "city": "Иваново" },
+        { "name": "Ozon", "price": 32750, "url": "https://www.ozon.ru/", "city": "Москва" },
+        { "name": "Regard", "price": 33100, "url": "https://www.regard.ru/", "city": "Москва" }
+      ],
+      "history": [
+        { "date": "2026-01", "price": 34500 },
+        { "date": "2026-02", "price": 33800 },
+        { "date": "2026-03", "price": 33500 },
+        { "date": "2026-04", "price": 33200 },
+        { "date": "2026-05", "price": 32990 }
+      ]
+    },
+    {
+      "name": "AMD Ryzen 5 7600",
+      "query": "AMD Ryzen 5 7600",
+      "keywords": ["ryzen 5 7600", "r5 7600", "7600", "amd ryzen 5"],
+      "category": "cpu",
+      "shops": [
+        { "name": "DNS", "price": 17990, "url": "https://www.dns-shop.ru/", "city": "Иваново" },
+        { "name": "Ситилинк", "price": 18299, "url": "https://www.citilink.ru/", "city": "Иваново" },
+        { "name": "Ozon", "price": 17850, "url": "https://www.ozon.ru/", "city": "Иваново" },
+        { "name": "Wildberries", "price": 18100, "url": "https://www.wildberries.ru/", "city": "Иваново" }
+      ],
+      "history": [
+        { "date": "2026-01", "price": 18900 },
+        { "date": "2026-02", "price": 18500 },
+        { "date": "2026-03", "price": 18200 },
+        { "date": "2026-04", "price": 18100 },
+        { "date": "2026-05", "price": 17990 }
+      ]
+    },
+    {
+      "name": "AMD Ryzen 7 7800X3D",
+      "query": "AMD Ryzen 7 7800X3D",
+      "keywords": ["7800x3d", "ryzen 7 7800", "x3d", "amd ryzen 7"],
+      "category": "cpu",
+      "shops": [
+        { "name": "DNS", "price": 35990, "url": "https://www.dns-shop.ru/", "city": "Иваново" },
+        { "name": "Ситилинк", "price": 36490, "url": "https://www.citilink.ru/", "city": "Иваново" },
+        { "name": "Ozon", "price": 36200, "url": "https://www.ozon.ru/", "city": "Москва" },
+        { "name": "Regard", "price": 35790, "url": "https://www.regard.ru/", "city": "Москва" }
+      ],
+      "history": [
+        { "date": "2026-01", "price": 37990 },
+        { "date": "2026-02", "price": 36990 },
+        { "date": "2026-03", "price": 36500 },
+        { "date": "2026-04", "price": 36200 },
+        { "date": "2026-05", "price": 35990 }
+      ]
+    },
+    {
+      "name": "ASUS PRIME B760M-A",
+      "query": "ASUS PRIME B760M-A",
+      "keywords": ["b760m", "asus b760", "prime b760", "материнская asus"],
+      "category": "motherboard",
+      "shops": [
+        { "name": "DNS", "price": 12990, "url": "https://www.dns-shop.ru/", "city": "Иваново" },
+        { "name": "Ситилинк", "price": 13199, "url": "https://www.citilink.ru/", "city": "Иваново" },
+        { "name": "Ozon", "price": 12850, "url": "https://www.ozon.ru/", "city": "Иваново" }
+      ],
+      "history": [
+        { "date": "2026-01", "price": 13500 },
+        { "date": "2026-02", "price": 13300 },
+        { "date": "2026-03", "price": 13100 },
+        { "date": "2026-04", "price": 13050 },
+        { "date": "2026-05", "price": 12990 }
+      ]
+    },
+    {
+      "name": "MSI PRO Z790-P",
+      "query": "MSI PRO Z790-P",
+      "keywords": ["z790", "msi z790", "pro z790"],
+      "category": "motherboard",
+      "shops": [
+        { "name": "DNS", "price": 21990, "url": "https://www.dns-shop.ru/", "city": "Иваново" },
+        { "name": "Regard", "price": 21790, "url": "https://www.regard.ru/", "city": "Москва" },
+        { "name": "Ozon", "price": 22100, "url": "https://www.ozon.ru/", "city": "Москва" }
+      ],
+      "history": [
+        { "date": "2026-01", "price": 22990 },
+        { "date": "2026-02", "price": 22500 },
+        { "date": "2026-03", "price": 22200 },
+        { "date": "2026-04", "price": 22050 },
+        { "date": "2026-05", "price": 21990 }
+      ]
+    },
+    {
+      "name": "Gigabyte B650M DS3H",
+      "query": "Gigabyte B650M DS3H",
+      "keywords": ["b650m", "gigabyte b650", "ds3h"],
+      "category": "motherboard",
+      "shops": [
+        { "name": "DNS", "price": 11990, "url": "https://www.dns-shop.ru/", "city": "Иваново" },
+        { "name": "Ситилинк", "price": 12190, "url": "https://www.citilink.ru/", "city": "Иваново" },
+        { "name": "Wildberries", "price": 12250, "url": "https://www.wildberries.ru/", "city": "Иваново" }
+      ],
+      "history": [
+        { "date": "2026-01", "price": 12500 },
+        { "date": "2026-02", "price": 12300 },
+        { "date": "2026-03", "price": 12150 },
+        { "date": "2026-04", "price": 12050 },
+        { "date": "2026-05", "price": 11990 }
+      ]
+    },
+    {
+      "name": "ASUS TUF GAMING X670E",
+      "query": "ASUS TUF GAMING X670E",
+      "keywords": ["x670e", "tuf x670", "asus x670"],
+      "category": "motherboard",
+      "shops": [
+        { "name": "DNS", "price": 28990, "url": "https://www.dns-shop.ru/", "city": "Иваново" },
+        { "name": "Regard", "price": 28790, "url": "https://www.regard.ru/", "city": "Москва" },
+        { "name": "Ozon", "price": 29100, "url": "https://www.ozon.ru/", "city": "Москва" }
+      ],
+      "history": [
+        { "date": "2026-01", "price": 29990 },
+        { "date": "2026-02", "price": 29500 },
+        { "date": "2026-03", "price": 29200 },
+        { "date": "2026-04", "price": 29050 },
+        { "date": "2026-05", "price": 28990 }
+      ]
+    },
+    {
+      "name": "Kingston Fury 16GB DDR5 5600",
+      "query": "Kingston Fury 16GB DDR5",
+      "keywords": ["kingston 16gb", "ddr5 16", "fury 5600", "озу 16"],
+      "category": "ram",
+      "shops": [
+        { "name": "DNS", "price": 4990, "url": "https://www.dns-shop.ru/", "city": "Иваново" },
+        { "name": "Ситилинк", "price": 5190, "url": "https://www.citilink.ru/", "city": "Иваново" },
+        { "name": "Ozon", "price": 4890, "url": "https://www.ozon.ru/", "city": "Иваново" }
+      ],
+      "history": [
+        { "date": "2026-01", "price": 5490 },
+        { "date": "2026-02", "price": 5290 },
+        { "date": "2026-03", "price": 5100 },
+        { "date": "2026-04", "price": 5050 },
+        { "date": "2026-05", "price": 4990 }
+      ]
+    },
+    {
+      "name": "Kingston Fury 32GB DDR5 5600",
+      "query": "Kingston Fury 32GB DDR5",
+      "keywords": ["kingston 32gb", "ddr5 32", "озу 32"],
+      "category": "ram",
+      "shops": [
+        { "name": "DNS", "price": 8990, "url": "https://www.dns-shop.ru/", "city": "Иваново" },
+        { "name": "Ситилинк", "price": 9290, "url": "https://www.citilink.ru/", "city": "Иваново" },
+        { "name": "Wildberries", "price": 9150, "url": "https://www.wildberries.ru/", "city": "Иваново" }
+      ],
+      "history": [
+        { "date": "2026-01", "price": 9490 },
+        { "date": "2026-02", "price": 9200 },
+        { "date": "2026-03", "price": 9100 },
+        { "date": "2026-04", "price": 9050 },
+        { "date": "2026-05", "price": 8990 }
+      ]
+    },
+    {
+      "name": "Corsair Vengeance 32GB DDR5 6000",
+      "query": "Corsair Vengeance 32GB DDR5 6000",
+      "keywords": ["corsair 32gb", "vengeance ddr5", "ddr5 6000"],
+      "category": "ram",
+      "shops": [
+        { "name": "DNS", "price": 10990, "url": "https://www.dns-shop.ru/", "city": "Иваново" },
+        { "name": "Regard", "price": 10890, "url": "https://www.regard.ru/", "city": "Москва" },
+        { "name": "Ozon", "price": 11100, "url": "https://www.ozon.ru/", "city": "Москва" }
+      ],
+      "history": [
+        { "date": "2026-01", "price": 11500 },
+        { "date": "2026-02", "price": 11200 },
+        { "date": "2026-03", "price": 11100 },
+        { "date": "2026-04", "price": 11050 },
+        { "date": "2026-05", "price": 10990 }
+      ]
+    },
+    {
+      "name": "NVIDIA GeForce RTX 4060 8GB",
+      "query": "RTX 4060 8GB",
+      "keywords": ["rtx 4060", "4060", "nvidia 4060", "видеокарта 4060"],
+      "category": "gpu",
+      "shops": [
+        { "name": "DNS", "price": 32990, "url": "https://www.dns-shop.ru/", "city": "Иваново" },
+        { "name": "Regard", "price": 32490, "url": "https://www.regard.ru/", "city": "Москва" },
+        { "name": "Ozon", "price": 33100, "url": "https://www.ozon.ru/", "city": "Иваново" },
+        { "name": "Ситилинк", "price": 32790, "url": "https://www.citilink.ru/", "city": "Иваново" }
+      ],
+      "history": [
+        { "date": "2026-01", "price": 34990 },
+        { "date": "2026-02", "price": 33990 },
+        { "date": "2026-03", "price": 33500 },
+        { "date": "2026-04", "price": 33200 },
+        { "date": "2026-05", "price": 32990 }
+      ]
+    },
+    {
+      "name": "NVIDIA GeForce RTX 4070 Super",
+      "query": "RTX 4070 Super",
+      "keywords": ["rtx 4070", "4070 super", "nvidia 4070"],
+      "category": "gpu",
+      "shops": [
+        { "name": "DNS", "price": 59990, "url": "https://www.dns-shop.ru/", "city": "Иваново" },
+        { "name": "Regard", "price": 59490, "url": "https://www.regard.ru/", "city": "Москва" },
+        { "name": "Ozon", "price": 60200, "url": "https://www.ozon.ru/", "city": "Москва" }
+      ],
+      "history": [
+        { "date": "2026-01", "price": 62990 },
+        { "date": "2026-02", "price": 61500 },
+        { "date": "2026-03", "price": 60800 },
+        { "date": "2026-04", "price": 60200 },
+        { "date": "2026-05", "price": 59990 }
+      ]
+    },
+    {
+      "name": "AMD Radeon RX 7600 8GB",
+      "query": "RX 7600 8GB",
+      "keywords": ["rx 7600", "radeon 7600", "amd 7600"],
+      "category": "gpu",
+      "shops": [
+        { "name": "DNS", "price": 28990, "url": "https://www.dns-shop.ru/", "city": "Иваново" },
+        { "name": "Ситилинк", "price": 29290, "url": "https://www.citilink.ru/", "city": "Иваново" },
+        { "name": "Wildberries", "price": 29100, "url": "https://www.wildberries.ru/", "city": "Иваново" }
+      ],
+      "history": [
+        { "date": "2026-01", "price": 30500 },
+        { "date": "2026-02", "price": 29800 },
+        { "date": "2026-03", "price": 29400 },
+        { "date": "2026-04", "price": 29150 },
+        { "date": "2026-05", "price": 28990 }
+      ]
+    },
+    {
+      "name": "AMD Radeon RX 7800 XT",
+      "query": "RX 7800 XT",
+      "keywords": ["rx 7800", "7800 xt", "radeon 7800"],
+      "category": "gpu",
+      "shops": [
+        { "name": "DNS", "price": 49990, "url": "https://www.dns-shop.ru/", "city": "Иваново" },
+        { "name": "Regard", "price": 49490, "url": "https://www.regard.ru/", "city": "Москва" },
+        { "name": "Ozon", "price": 50200, "url": "https://www.ozon.ru/", "city": "Москва" }
+      ],
+      "history": [
+        { "date": "2026-01", "price": 52990 },
+        { "date": "2026-02", "price": 51500 },
+        { "date": "2026-03", "price": 50800 },
+        { "date": "2026-04", "price": 50200 },
+        { "date": "2026-05", "price": 49990 }
+      ]
+    },
+    {
+      "name": "Samsung 990 PRO 1TB NVMe",
+      "query": "Samsung 990 PRO 1TB",
+      "keywords": ["990 pro", "samsung ssd", "nvme 1tb", "ssd 1tb"],
+      "category": "storage",
+      "shops": [
+        { "name": "DNS", "price": 9990, "url": "https://www.dns-shop.ru/", "city": "Иваново" },
+        { "name": "Ситилинк", "price": 10290, "url": "https://www.citilink.ru/", "city": "Иваново" },
+        { "name": "Ozon", "price": 9890, "url": "https://www.ozon.ru/", "city": "Иваново" }
+      ],
+      "history": [
+        { "date": "2026-01", "price": 10990 },
+        { "date": "2026-02", "price": 10500 },
+        { "date": "2026-03", "price": 10200 },
+        { "date": "2026-04", "price": 10100 },
+        { "date": "2026-05", "price": 9990 }
+      ]
+    },
+    {
+      "name": "WD Black SN850X 2TB",
+      "query": "WD Black SN850X 2TB",
+      "keywords": ["sn850x", "wd black 2tb", "ssd 2tb"],
+      "category": "storage",
+      "shops": [
+        { "name": "DNS", "price": 15990, "url": "https://www.dns-shop.ru/", "city": "Иваново" },
+        { "name": "Regard", "price": 15790, "url": "https://www.regard.ru/", "city": "Москва" },
+        { "name": "Wildberries", "price": 16100, "url": "https://www.wildberries.ru/", "city": "Иваново" }
+      ],
+      "history": [
+        { "date": "2026-01", "price": 16990 },
+        { "date": "2026-02", "price": 16500 },
+        { "date": "2026-03", "price": 16200 },
+        { "date": "2026-04", "price": 16100 },
+        { "date": "2026-05", "price": 15990 }
+      ]
+    },
+    {
+      "name": "Kingston NV2 500GB",
+      "query": "Kingston NV2 500GB",
+      "keywords": ["kingston nv2", "nv2 500", "ssd 500gb"],
+      "category": "storage",
+      "shops": [
+        { "name": "DNS", "price": 3990, "url": "https://www.dns-shop.ru/", "city": "Иваново" },
+        { "name": "Ситилинк", "price": 4190, "url": "https://www.citilink.ru/", "city": "Иваново" },
+        { "name": "Ozon", "price": 3890, "url": "https://www.ozon.ru/", "city": "Иваново" }
+      ],
+      "history": [
+        { "date": "2026-01", "price": 4490 },
+        { "date": "2026-02", "price": 4290 },
+        { "date": "2026-03", "price": 4100 },
+        { "date": "2026-04", "price": 4050 },
+        { "date": "2026-05", "price": 3990 }
+      ]
+    },
+    {
+      "name": "Be Quiet! System Power 10 550W",
+      "query": "Be Quiet System Power 550W",
+      "keywords": ["be quiet 550", "бп 550w", "system power 10"],
+      "category": "psu",
+      "shops": [
+        { "name": "DNS", "price": 5490, "url": "https://www.dns-shop.ru/", "city": "Иваново" },
+        { "name": "Ситилинк", "price": 5690, "url": "https://www.citilink.ru/", "city": "Иваново" },
+        { "name": "Ozon", "price": 5390, "url": "https://www.ozon.ru/", "city": "Иваново" }
+      ],
+      "history": [
+        { "date": "2026-01", "price": 5790 },
+        { "date": "2026-02", "price": 5650 },
+        { "date": "2026-03", "price": 5580 },
+        { "date": "2026-04", "price": 5520 },
+        { "date": "2026-05", "price": 5490 }
+      ]
+    },
+    {
+      "name": "Corsair RM750e 750W 80+ Gold",
+      "query": "Corsair RM750e 750W",
+      "keywords": ["rm750e", "corsair 750", "бп 750w", "gold 750"],
+      "category": "psu",
+      "shops": [
+        { "name": "DNS", "price": 8990, "url": "https://www.dns-shop.ru/", "city": "Иваново" },
+        { "name": "Regard", "price": 8890, "url": "https://www.regard.ru/", "city": "Москва" },
+        { "name": "Wildberries", "price": 9150, "url": "https://www.wildberries.ru/", "city": "Иваново" }
+      ],
+      "history": [
+        { "date": "2026-01", "price": 9490 },
+        { "date": "2026-02", "price": 9200 },
+        { "date": "2026-03", "price": 9100 },
+        { "date": "2026-04", "price": 9050 },
+        { "date": "2026-05", "price": 8990 }
+      ]
+    },
+    {
+      "name": "Seasonic Focus GX-850 850W",
+      "query": "Seasonic Focus GX-850",
+      "keywords": ["seasonic 850", "focus gx", "бп 850w"],
+      "category": "psu",
+      "shops": [
+        { "name": "DNS", "price": 11990, "url": "https://www.dns-shop.ru/", "city": "Иваново" },
+        { "name": "Ситилинк", "price": 12190, "url": "https://www.citilink.ru/", "city": "Иваново" },
+        { "name": "Ozon", "price": 11890, "url": "https://www.ozon.ru/", "city": "Москва" }
+      ],
+      "history": [
+        { "date": "2026-01", "price": 12500 },
+        { "date": "2026-02", "price": 12250 },
+        { "date": "2026-03", "price": 12100 },
+        { "date": "2026-04", "price": 12050 },
+        { "date": "2026-05", "price": 11990 }
+      ]
+    },
+    {
+      "name": "Deepcool MATREXX 30",
+      "query": "Deepcool MATREXX 30",
+      "keywords": ["matrexx 30", "deepcool корпус", "корпус deepcool"],
+      "category": "case",
+      "shops": [
+        { "name": "DNS", "price": 2490, "url": "https://www.dns-shop.ru/", "city": "Иваново" },
+        { "name": "Ситилинк", "price": 2690, "url": "https://www.citilink.ru/", "city": "Иваново" },
+        { "name": "Ozon", "price": 2390, "url": "https://www.ozon.ru/", "city": "Иваново" }
+      ],
+      "history": [
+        { "date": "2026-01", "price": 2790 },
+        { "date": "2026-02", "price": 2650 },
+        { "date": "2026-03", "price": 2580 },
+        { "date": "2026-04", "price": 2520 },
+        { "date": "2026-05", "price": 2490 }
+      ]
+    },
+    {
+      "name": "Fractal Design Pop Air",
+      "query": "Fractal Design Pop Air",
+      "keywords": ["pop air", "fractal design", "корпус fractal"],
+      "category": "case",
+      "shops": [
+        { "name": "DNS", "price": 7990, "url": "https://www.dns-shop.ru/", "city": "Иваново" },
+        { "name": "Regard", "price": 7890, "url": "https://www.regard.ru/", "city": "Москва" },
+        { "name": "Wildberries", "price": 8150, "url": "https://www.wildberries.ru/", "city": "Иваново" }
+      ],
+      "history": [
+        { "date": "2026-01", "price": 8490 },
+        { "date": "2026-02", "price": 8250 },
+        { "date": "2026-03", "price": 8100 },
+        { "date": "2026-04", "price": 8050 },
+        { "date": "2026-05", "price": 7990 }
+      ]
+    },
+    {
+      "name": "NZXT H5 Flow",
+      "query": "NZXT H5 Flow",
+      "keywords": ["h5 flow", "nzxt корпус", "nzxt h5"],
+      "category": "case",
+      "shops": [
+        { "name": "DNS", "price": 9990, "url": "https://www.dns-shop.ru/", "city": "Иваново" },
+        { "name": "Ситилинк", "price": 10190, "url": "https://www.citilink.ru/", "city": "Иваново" },
+        { "name": "Ozon", "price": 9890, "url": "https://www.ozon.ru/", "city": "Москва" }
+      ],
+      "history": [
+        { "date": "2026-01", "price": 10500 },
+        { "date": "2026-02", "price": 10250 },
+        { "date": "2026-03", "price": 10100 },
+        { "date": "2026-04", "price": 10050 },
+        { "date": "2026-05", "price": 9990 }
+      ]
+    }
+  ],
+  "disclaimer": "Демо-каталог цен CAP PC (24 товара). Данные для обучения — проверяйте актуальные цены на сайтах магазинов."
+}

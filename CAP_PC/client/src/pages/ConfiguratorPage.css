@@ -1,0 +1,12 @@
+.configurator-layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .configurator-layout {
+    grid-template-columns: 1fr;
+  }
+}

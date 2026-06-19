@@ -1,0 +1,36 @@
+{
+
+  "name": "test",
+
+  "private": true,
+
+  "version": "1.0.0",
+
+  "description": "Учебный проект: JavaScript и React",
+
+  "scripts": {
+
+    "dev": "npm run dev --prefix react-first-app",
+
+    "build": "npm run build --prefix react-first-app",
+
+    "preview": "npm run preview --prefix react-first-app",
+
+    "dev:cap:server": "npm run dev --prefix CAP_PC/server",
+
+    "dev:cap:client": "npm run dev --prefix CAP_PC/client",
+
+    "install:cap": "npm install --prefix CAP_PC/server && npm install --prefix CAP_PC/client && npm install --prefix CAP_PC",
+    "build:cap": "npm run build --prefix CAP_PC",
+    "start:cap": "npm run start:prod --prefix CAP_PC",
+    "preview:cap": "npm run preview --prefix CAP_PC",
+
+    "dev:ar": "npm run dev --prefix ar-demo",
+    "build:ar": "npm run build --prefix ar-demo",
+    "preview:ar": "npm run preview --prefix ar-demo",
+    "install:ar": "npm install --prefix ar-demo"
+
+  }
+
+}
+

@@ -1,0 +1,16 @@
+:root {
+  --color-primary: rgb(97, 106, 190);
+  --color-primary-dark: rgb(75, 84, 160);
+  --color-accent: rgb(238, 241, 7);
+  --color-bg: rgb(255, 245, 245);
+  --color-surface: #ffffff;
+  --color-text: #1a1a2e;
+  --color-text-muted: #5c5c6f;
+  --color-border: #e8e8ef;
+  --color-success: #2e7d32;
+  --color-error: #c62828;
+  --radius: 8px;
+  --shadow: 0 2px 12px rgba(97, 106, 190, 0.12);
+  --max-width: 1200px;
+  --font: 'Inter', system-ui, -apple-system, sans-serif;
+}

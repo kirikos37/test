@@ -1,0 +1,18 @@
+.footer {
+  background: var(--color-primary);
+  color: #fff;
+  margin-top: auto;
+  padding: 1.5rem 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.footer__inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.footer p {
+  margin: 0.25rem 0;
+  opacity: 0.9;
+}

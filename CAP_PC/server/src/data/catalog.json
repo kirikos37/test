@@ -1,0 +1,51 @@
+{
+  "categories": [
+    { "id": "cpu", "name": "Процессор", "icon": "🧠" },
+    { "id": "motherboard", "name": "Материнская плата", "icon": "🔌" },
+    { "id": "ram", "name": "Оперативная память", "icon": "💾" },
+    { "id": "gpu", "name": "Видеокарта", "icon": "🎮" },
+    { "id": "storage", "name": "Накопитель", "icon": "💿" },
+    { "id": "psu", "name": "Блок питания", "icon": "⚡" },
+    { "id": "case", "name": "Корпус", "icon": "🖥️" }
+  ],
+  "parts": {
+    "cpu": [
+      { "id": "cpu1", "name": "Intel Core i5-14400F", "price": 18990, "socket": "LGA1700", "tdp": 65, "score": 8200 },
+      { "id": "cpu2", "name": "Intel Core i7-14700K", "price": 32990, "socket": "LGA1700", "tdp": 125, "score": 12500 },
+      { "id": "cpu3", "name": "AMD Ryzen 5 7600", "price": 17990, "socket": "AM5", "tdp": 65, "score": 8500 },
+      { "id": "cpu4", "name": "AMD Ryzen 7 7800X3D", "price": 35990, "socket": "AM5", "tdp": 120, "score": 14000 }
+    ],
+    "motherboard": [
+      { "id": "mb1", "name": "ASUS PRIME B760M-A", "price": 12990, "socket": "LGA1700", "ramType": "DDR5" },
+      { "id": "mb2", "name": "MSI PRO Z790-P", "price": 21990, "socket": "LGA1700", "ramType": "DDR5" },
+      { "id": "mb3", "name": "Gigabyte B650M DS3H", "price": 11990, "socket": "AM5", "ramType": "DDR5" },
+      { "id": "mb4", "name": "ASUS TUF GAMING X670E", "price": 28990, "socket": "AM5", "ramType": "DDR5" }
+    ],
+    "ram": [
+      { "id": "ram1", "name": "Kingston Fury 16GB DDR5 5600", "price": 4990, "ramType": "DDR5", "capacity": 16 },
+      { "id": "ram2", "name": "Kingston Fury 32GB DDR5 5600", "price": 8990, "ramType": "DDR5", "capacity": 32 },
+      { "id": "ram3", "name": "Corsair Vengeance 32GB DDR5 6000", "price": 10990, "ramType": "DDR5", "capacity": 32 }
+    ],
+    "gpu": [
+      { "id": "gpu1", "name": "NVIDIA GeForce RTX 4060 8GB", "price": 32990, "tdp": 115, "score": 9500 },
+      { "id": "gpu2", "name": "NVIDIA GeForce RTX 4070 Super", "price": 59990, "tdp": 220, "score": 14500 },
+      { "id": "gpu3", "name": "AMD Radeon RX 7600 8GB", "price": 28990, "tdp": 165, "score": 8800 },
+      { "id": "gpu4", "name": "AMD Radeon RX 7800 XT", "price": 49990, "tdp": 263, "score": 13200 }
+    ],
+    "storage": [
+      { "id": "ssd1", "name": "Samsung 990 PRO 1TB NVMe", "price": 9990, "capacity": 1024 },
+      { "id": "ssd2", "name": "WD Black SN850X 2TB", "price": 15990, "capacity": 2048 },
+      { "id": "ssd3", "name": "Kingston NV2 500GB", "price": 3990, "capacity": 512 }
+    ],
+    "psu": [
+      { "id": "psu1", "name": "Be Quiet! System Power 10 550W", "price": 5490, "wattage": 550 },
+      { "id": "psu2", "name": "Corsair RM750e 750W 80+ Gold", "price": 8990, "wattage": 750 },
+      { "id": "psu3", "name": "Seasonic Focus GX-850 850W", "price": 11990, "wattage": 850 }
+    ],
+    "case": [
+      { "id": "case1", "name": "Deepcool MATREXX 30", "price": 2490 },
+      { "id": "case2", "name": "Fractal Design Pop Air", "price": 7990 },
+      { "id": "case3", "name": "NZXT H5 Flow", "price": 9990 }
+    ]
+  }
+}

@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CAP PC — Full-stack агрегатор с каталогом и фильтрами</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="shared.css" />
+  <style>
+    :root {
+      --bg: #fff5f5;
+      --surface: #fff;
+      --text: #1a1a2e;
+      --muted: #5c5c6f;
+      --primary: #616abe;
+      --primary-dark: #4b54a0;
+      --accent: #eef107;
+      --border: #e8e8ef;
+      --success: #2e7d32;
+    }
+    body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); }
+    .nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 16px 28px; background: var(--surface); border-bottom: 1px solid var(--border);
+    }
+    .nav.scrolled { box-shadow: 0 4px 20px rgba(97,106,190,.1); }
+    .burger span { background: var(--text); }
+    .logo { font-weight: 800; font-size: 20px; color: var(--primary); }
+    .logo span { color: var(--muted); font-weight: 600; font-size: 13px; margin-left: 8px; }
+    .nav-links { display: flex; gap: 20px; align-items: center; }
+    .nav-links a { font-size: 14px; font-weight: 600; color: var(--muted); }
+    .nav-links a:hover { color: var(--primary); }
+    .btn-primary {
+      background: var(--primary); color: #fff;
+      box-shadow: 0 8px 24px rgba(97,106,190,.28);
+    }
+    .btn-outline {
+      background: #fff; color: var(--primary); border: 1px solid var(--border);
+      padding: 10px 18px; border-radius: 10px; font-weight: 700; font-size: 13px;
+    }
+    .mobile-menu-panel { background: #fff; }
+    .mobile-menu-panel a { color: var(--text); }
+
+    .hero {
+      max-width: 1140px; margin: 0 auto; padding: 48px 28px 24px;
+      display: grid; grid-template-columns: 1.1fr .9fr; gap: 36px; align-items: center;
+    }
+    .hero-tag {
+      display: inline-block; padding: 6px 12px; background: rgba(97,106,190,.1);
+      color: var(--primary); border-radius: 8px; font-size: 12px; font-weight: 700; margin-bottom: 14px;
+    }
+    h1 { font-size: clamp(30px, 4vw, 44px); font-weight: 800; line-height: 1.1; margin-bottom: 12px; }
+    .hero p { color: var(--muted); line-height: 1.7; font-size: 15px; margin-bottom: 20px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .hero-stack { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+    .stack-pill {
+      padding: 6px 12px; border-radius: 100px; background: var(--surface);
+      border: 1px solid var(--border); font-size: 12px; font-weight: 600; color: var(--muted);
+    }
+    .hero-panel {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 20px;
+      padding: 22px; box-shadow: 0 20px 50px rgba(97,106,190,.12);
+    }
+    .hero-panel h3 { font-size: 14px; margin-bottom: 14px; }
+    .metric { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px dashed var(--border); font-size: 13px; }
+    .metric strong { color: var(--primary); }
+
+    .toolbar {
+      max-width: 1140px; margin: 8px auto 0; padding: 0 28px;
+      display: flex; flex-wrap: wrap; gap: 12px; align-items: center;
+    }
+    .search {
+      flex: 1; min-width: 220px; display: flex; align-items: center; gap: 10px;
+      background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px;
+    }
+    .search input {
+      border: none; outline: none; width: 100%; font: inherit; font-size: 14px; background: transparent;
+    }
+    .filters { display: flex; flex-wrap: wrap; gap: 8px; }
+    .filter-chip {
+      padding: 10px 14px; border-radius: 100px; border: 1px solid var(--border);
+      background: var(--surface); font-size: 13px; font-weight: 600; color: var(--muted); cursor: pointer;
+      transition: all .2s;
+    }
+    .filter-chip.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+    .catalog {
+      max-width: 1140px; margin: 0 auto; padding: 24px 28px 40px;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+    }
+    .card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+      overflow: hidden; cursor: pointer; transition: transform .25s, box-shadow .25s;
+    }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(97,106,190,.14); }
+    .card.hidden { display: none; }
+    .card-img {
+      height: 120px; display: flex; align-items: center; justify-content: center;
+      font-size: 42px; background: linear-gradient(135deg, rgba(97,106,190,.12), rgba(238,241,7,.15));
+    }
+    .card-body { padding: 16px; }
+    .card-meta { font-size: 11px; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: .04em; margin-bottom: 6px; }
+    .card-body h3 { font-size: 15px; margin-bottom: 6px; }
+    .card-body p { font-size: 12px; color: var(--muted); line-height: 1.5; margin-bottom: 12px; }
+    .card-price { font-size: 17px; font-weight: 800; color: var(--primary); }
+    .empty {
+      grid-column: 1 / -1; text-align: center; padding: 40px; color: var(--muted);
+      background: var(--surface); border-radius: 16px; border: 1px dashed var(--border);
+    }
+
+    .detail {
+      position: fixed; inset: 0; z-index: 200; display: none; align-items: center; justify-content: center; padding: 20px;
+      background: rgba(26,26,46,.45); backdrop-filter: blur(6px);
+    }
+    .detail.open { display: flex; }
+    .detail-box {
+      width: min(560px, 100%); background: var(--surface); border-radius: 20px;
+      border: 1px solid var(--border); padding: 24px; position: relative;
+      box-shadow: 0 24px 60px rgba(0,0,0,.18);
+    }
+    .detail-close {
+      position: absolute; top: 14px; right: 14px; width: 36px; height: 36px;
+      border: none; border-radius: 10px; background: var(--bg); font-size: 18px; cursor: pointer;
+    }
+    .detail-icon { font-size: 48px; margin-bottom: 12px; }
+    .detail-box h2 { font-size: 22px; margin-bottom: 8px; }
+    .detail-box p { color: var(--muted); line-height: 1.7; font-size: 14px; margin-bottom: 16px; }
+    .detail-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+
+    .apply {
+      max-width: 1140px; margin: 0 auto; padding: 0 28px 80px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+    }
+    .apply-card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 22px;
+    }
+    .apply-card h3 { font-size: 18px; margin-bottom: 8px; }
+    .apply-card p { color: var(--muted); font-size: 14px; line-height: 1.6; margin-bottom: 16px; }
+    .form-row { display: grid; gap: 10px; margin-bottom: 12px; }
+    .form-row input, .form-row select, .form-row textarea {
+      width: 100%; padding: 12px 14px; border-radius: 10px; border: 1px solid var(--border);
+      font: inherit; font-size: 14px;
+    }
+    .form-row textarea { min-height: 90px; resize: vertical; }
+    .form-success { display: none; color: var(--success); font-weight: 600; font-size: 14px; margin-top: 10px; }
+    .form-success.show { display: block; }
+
+    .github-bar {
+      max-width: 1140px; margin: 0 auto 24px; padding: 0 28px;
+    }
+    .github-link {
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px;
+      padding: 16px 18px; border-radius: 14px; background: #1a1a2e; color: #f4f4f5;
+    }
+    .github-link a { color: var(--accent); font-weight: 700; font-size: 14px; }
+
+    .footer-bottom { text-align: center; padding: 24px; font-size: 13px; color: var(--muted); border-top: 1px solid var(--border); }
+
+    @media (max-width: 900px) {
+      .hero, .apply { grid-template-columns: 1fr; }
+      .catalog { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 560px) {
+      .catalog { grid-template-columns: 1fr; }
+      .hero, .toolbar, .catalog, .apply, .github-bar { padding-left: 20px; padding-right: 20px; }
+    }
+
+    .back-home {
+      padding: 11px 18px; border-radius: 12px; background: #fff;
+      border: 1px solid var(--border); color: var(--primary); font-weight: 700; font-size: 13px;
+      box-shadow: 0 6px 20px rgba(97,106,190,.12);
+    }
+    .back-to-top { background: var(--primary); color: #fff; box-shadow: 0 6px 24px rgba(97,106,190,.35); }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="logo">CAP PC <span>агрегатор</span></div>
+    <ul class="nav-links">
+      <li><a href="#catalog">Каталог</a></li>
+      <li><a href="#apply">Заявка</a></li>
+      <li><a href="https://github.com/kirikos37/test/tree/main/CAP_PC" target="_blank" rel="noopener">GitHub</a></li>
+    </ul>
+    <button class="burger" aria-label="Меню"><span></span><span></span><span></span></button>
+  </nav>
+  <div class="mobile-menu">
+    <div class="mobile-menu-panel">
+      <a href="#catalog">Каталог</a>
+      <a href="#apply">Заявка</a>
+      <a href="https://github.com/kirikos37/test/tree/main/CAP_PC" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+
+  <section class="hero reveal">
+    <div>
+      <span class="hero-tag">Full-stack · React + Node.js</span>
+      <h1>Агрегатор с каталогом, поиском и карточками</h1>
+      <p>
+        Учебный, но полноценный проект <strong>CAP PC</strong>: каталог позиций, фильтры по категориям,
+        детальные страницы, сравнение цен, конфигуратор и форма обратной связи.
+        Та же архитектура подойдёт для агрегатора спортивных лагерей.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#catalog">Смотреть каталог</a>
+        <a class="btn btn-outline" href="https://github.com/kirikos37/test/tree/main/CAP_PC" target="_blank" rel="noopener">Исходники на GitHub</a>
+      </div>
+      <div class="hero-stack">
+        <span class="stack-pill">React 18</span>
+        <span class="stack-pill">Vite</span>
+        <span class="stack-pill">Express API</span>
+        <span class="stack-pill">Фильтры</span>
+        <span class="stack-pill">Формы</span>
+      </div>
+    </div>
+    <div class="hero-panel reveal-right">
+      <h3>Что реализовано в CAP PC</h3>
+      <div class="metric"><span>Каталог + фильтры</span><strong>✓</strong></div>
+      <div class="metric"><span>Поиск и сравнение</span><strong>✓</strong></div>
+      <div class="metric"><span>Детальные экраны</span><strong>✓</strong></div>
+      <div class="metric"><span>Конфигуратор / сборка</span><strong>✓</strong></div>
+      <div class="metric"><span>Чат / заявка</span><strong>✓</strong></div>
+      <div class="metric"><span>Оплата на сайте</span><strong>готово к интеграции</strong></div>
+    </div>
+  </section>
+
+  <div class="github-bar reveal">
+    <div class="github-link">
+      <span>Полный проект: клиент + сервер + API · папка <code>CAP_PC</code></span>
+      <a href="https://github.com/kirikos37/test/tree/main/CAP_PC" target="_blank" rel="noopener">github.com/kirikos37/test →</a>
+    </div>
+  </div>
+
+  <div class="toolbar reveal" id="catalog">
+    <label class="search">
+      <span aria-hidden="true">🔍</span>
+      <input type="search" id="searchInput" placeholder="Поиск по названию..." />
+    </label>
+    <div class="filters" id="filters">
+      <button type="button" class="filter-chip active" data-cat="all">Все</button>
+      <button type="button" class="filter-chip" data-cat="cpu">Процессоры</button>
+      <button type="button" class="filter-chip" data-cat="gpu">Видеокарты</button>
+      <button type="button" class="filter-chip" data-cat="ram">Память</button>
+      <button type="button" class="filter-chip" data-cat="storage">Накопители</button>
+    </div>
+  </div>
+
+  <div class="catalog reveal" id="catalogGrid"></div>
+
+  <section class="apply reveal" id="apply">
+    <div class="apply-card">
+      <h3>Оставить заявку</h3>
+      <p>Демо формы — в полном проекте заявки уходят на сервер и в чат поддержки.</p>
+      <form id="applyForm">
+        <div class="form-row"><input type="text" name="name" placeholder="Ваше имя" required /></div>
+        <div class="form-row"><input type="tel" name="phone" placeholder="Телефон" required /></div>
+        <div class="form-row">
+          <select name="item" required>
+            <option value="">Выберите позицию</option>
+          </select>
+        </div>
+        <div class="form-row"><textarea name="comment" placeholder="Комментарий"></textarea></div>
+        <button type="submit" class="btn btn-primary">Отправить заявку</button>
+        <p class="form-success" id="formSuccess">Заявка отправлена (демо). В CAP PC — через API.</p>
+      </form>
+    </div>
+    <div class="apply-card">
+      <h3>Оплата на сайте</h3>
+      <p>
+        В заказе подключается ЮKassa, Robokassa или Тинькофф. В CAP PC заложена серверная часть —
+        платёжный модуль добавляется на готовый API без переделки витрины.
+      </p>
+      <button type="button" class="btn btn-primary" id="payDemo">Оплатить (демо)</button>
+      <p class="form-success" id="paySuccess">Демо-оплата: интеграция по ТЗ заказчика.</p>
+    </div>
+  </section>
+
+  <footer class="footer-bottom">CAP PC · демо для портфолио · React + Express · 2026</footer>
+
+  <div class="detail" id="detail" aria-hidden="true">
+    <div class="detail-box" role="dialog" aria-modal="true">
+      <button class="detail-close" type="button" aria-label="Закрыть">×</button>
+      <div class="detail-icon" id="detailIcon"></div>
+      <h2 id="detailTitle"></h2>
+      <p id="detailText"></p>
+      <div class="detail-actions">
+        <button type="button" class="btn btn-primary" id="detailApply">Оставить заявку</button>
+        <button type="button" class="btn btn-outline" id="detailPay">Оплатить</button>
+      </div>
+    </div>
+  </div>
+
+  <a href="../index.html" class="back-home" aria-label="Вернуться в портфолио">
+    <span class="back-home-icon" aria-hidden="true">←</span>
+    <span class="back-home-label">К портфолио</span>
+  </a>
+
+  <script src="shared.js"></script>
+  <script>
+    const ITEMS = [
+      { id: 1, cat: 'cpu', icon: '🧠', title: 'AMD Ryzen 5 7600', city: 'Каталог CPU', desc: '6 ядер, AM5, отличный баланс цены и производительности для игр и работы.', price: '18 990 ₽' },
+      { id: 2, cat: 'cpu', icon: '⚡', title: 'Intel Core i5-14600K', city: 'Каталог CPU', desc: '14 ядер, высокие частоты, подходит для стриминга и тяжёлых задач.', price: '24 500 ₽' },
+      { id: 3, cat: 'gpu', icon: '🎮', title: 'NVIDIA RTX 4060 Ti', city: 'Каталог GPU', desc: '8 GB GDDR6, DLSS 3, комфортный FPS в Full HD и QHD.', price: '42 990 ₽' },
+      { id: 4, cat: 'gpu', icon: '🔥', title: 'AMD Radeon RX 7700 XT', city: 'Каталог GPU', desc: '12 GB, сильная карта для современных AAA-игр.', price: '46 790 ₽' },
+      { id: 5, cat: 'ram', icon: '💾', title: 'Kingston Fury 32GB DDR5', city: 'Каталог RAM', desc: '2×16 GB, 6000 MHz — оптимально под платформу AM5.', price: '9 890 ₽' },
+      { id: 6, cat: 'storage', icon: '💿', title: 'Samsung 990 Pro 1TB', city: 'Каталог SSD', desc: 'NVMe PCIe 4.0, быстрая загрузка системы и игр.', price: '8 490 ₽' },
+      { id: 7, cat: 'storage', icon: '📀', title: 'WD Black SN850X 2TB', city: 'Каталог SSD', desc: '2 TB под библиотеку игр и проектов без компромиссов.', price: '15 990 ₽' },
+    ];
+
+    const grid = document.getElementById('catalogGrid');
+    const searchInput = document.getElementById('searchInput');
+    const filters = document.getElementById('filters');
+    const detail = document.getElementById('detail');
+    const applyForm = document.getElementById('applyForm');
+    const itemSelect = applyForm.querySelector('select[name="item"]');
+    let activeCat = 'all';
+
+    ITEMS.forEach((item) => {
+      const opt = document.createElement('option');
+      opt.value = item.title;
+      opt.textContent = item.title;
+      itemSelect.appendChild(opt);
+
+      const card = document.createElement('article');
+      card.className = 'card';
+      card.dataset.cat = item.cat;
+      card.dataset.title = item.title.toLowerCase();
+      card.innerHTML = `
+        <div class="card-img">${item.icon}</div>
+        <div class="card-body">
+          <div class="card-meta">${item.city}</div>
+          <h3>${item.title}</h3>
+          <p>${item.desc}</p>
+          <div class="card-price">${item.price}</div>
+        </div>`;
+      card.addEventListener('click', () => openDetail(item));
+      grid.appendChild(card);
+    });
+
+    function render() {
+      const q = searchInput.value.trim().toLowerCase();
+      let visible = 0;
+      grid.querySelectorAll('.card').forEach((card) => {
+        const matchCat = activeCat === 'all' || card.dataset.cat === activeCat;
+        const matchQ = !q || card.dataset.title.includes(q);
+        const show = matchCat && matchQ;
+        card.classList.toggle('hidden', !show);
+        if (show) visible++;
+      });
+      let empty = grid.querySelector('.empty');
+      if (!visible) {
+        if (!empty) {
+          empty = document.createElement('div');
+          empty.className = 'empty';
+          empty.textContent = 'Ничего не найдено. Попробуйте другой фильтр или запрос.';
+          grid.appendChild(empty);
+        }
+      } else if (empty) empty.remove();
+    }
+
+    function openDetail(item) {
+      document.getElementById('detailIcon').textContent = item.icon;
+      document.getElementById('detailTitle').textContent = item.title;
+      document.getElementById('detailText').textContent = `${item.desc} Цена: ${item.price}`;
+      detail.classList.add('open');
+      detail.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeDetail() {
+      detail.classList.remove('open');
+      detail.setAttribute('aria-hidden', 'true');
+    }
+
+    filters.addEventListener('click', (e) => {
+      const btn = e.target.closest('.filter-chip');
+      if (!btn) return;
+      filters.querySelectorAll('.filter-chip').forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeCat = btn.dataset.cat;
+      render();
+    });
+
+    searchInput.addEventListener('input', render);
+    detail.querySelector('.detail-close').addEventListener('click', closeDetail);
+    detail.addEventListener('click', (e) => { if (e.target === detail) closeDetail(); });
+    document.getElementById('detailApply').addEventListener('click', () => {
+      closeDetail();
+      document.getElementById('apply').scrollIntoView({ behavior: 'smooth' });
+    });
+    document.getElementById('detailPay').addEventListener('click', () => {
+      document.getElementById('paySuccess').classList.add('show');
+      closeDetail();
+    });
+    document.getElementById('payDemo').addEventListener('click', () => {
+      document.getElementById('paySuccess').classList.add('show');
+    });
+    applyForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      document.getElementById('formSuccess').classList.add('show');
+      applyForm.reset();
+    });
+  </script>
+</body>
+</html>
